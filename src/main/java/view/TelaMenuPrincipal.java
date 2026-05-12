@@ -32,6 +32,8 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         desktopPane = new javax.swing.JDesktopPane();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuTelas = new javax.swing.JMenu();
         MenuItemMovimentacao = new javax.swing.JMenuItem();
@@ -41,15 +43,39 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Seja Bem-Vindo !");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Controle de Estoque");
+
+        desktopPane.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        desktopPane.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout desktopPaneLayout = new javax.swing.GroupLayout(desktopPane);
         desktopPane.setLayout(desktopPaneLayout);
         desktopPaneLayout.setHorizontalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 679, Short.MAX_VALUE)
+            .addGroup(desktopPaneLayout.createSequentialGroup()
+                .addGroup(desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(desktopPaneLayout.createSequentialGroup()
+                        .addGap(214, 214, 214)
+                        .addComponent(jLabel2))
+                    .addGroup(desktopPaneLayout.createSequentialGroup()
+                        .addGap(189, 189, 189)
+                        .addComponent(jLabel1)))
+                .addContainerGap(217, Short.MAX_VALUE))
         );
         desktopPaneLayout.setVerticalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 431, Short.MAX_VALUE)
+            .addGroup(desktopPaneLayout.createSequentialGroup()
+                .addGap(110, 110, 110)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addContainerGap(235, Short.MAX_VALUE))
         );
 
         MenuTelas.setText("Telas");
@@ -134,6 +160,8 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuItemProduto;
     private javax.swing.JMenu MenuTelas;
     private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }
