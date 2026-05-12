@@ -111,7 +111,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
         
         if (login.isEmpty() || senha.isEmpty()) {
-            throw new Exception("Preencha todos os campos!");
+            throw new Mensagem("Preencha todos os campos!");
         }
 
         
@@ -121,7 +121,7 @@ public class TelaLogin extends javax.swing.JFrame {
         
         this.dispose();
 
-    } catch (Exception e) {
+    } catch (Mensagem e) {
 
             JOptionPane.showMessageDialog(
             null,

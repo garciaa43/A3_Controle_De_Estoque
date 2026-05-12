@@ -4,6 +4,7 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
@@ -132,7 +133,23 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // TODO add your handling code here:
+        try {
+            String nomeProduto = TxtNomeProduto.getText();
+            String data = TxtDataMovimentacao.getText();
+            String qntdMovimentada = TxtQntdMovimentada.getText();
+            String tipoMovimentacao = comboBoxTipodeMovimentacao.getActionCommand();
+            
+            if(nomeProduto.isEmpty() || data.isEmpty() || qntdMovimentada.isEmpty() || tipoMovimentacao.isEmpty()) {
+                throw new Mensagem("Todos os campos devem ser preenchidos.");
+            }
+        } catch (Mensagem e) {
+            JOptionPane.showMessageDialog(
+            null,
+            e.getMessage(),
+            "Erro",
+            JOptionPane.ERROR_MESSAGE
+        );
+        }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void BtnGerenciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGerenciarActionPerformed
