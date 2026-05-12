@@ -88,6 +88,7 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
         MenuTelas.add(MenuItemProduto);
 
         MenuItemCategoria.setText("Categoria");
+        MenuItemCategoria.addActionListener(this::MenuItemCategoriaActionPerformed);
         MenuTelas.add(MenuItemCategoria);
 
         jMenuBar1.add(MenuTelas);
@@ -127,6 +128,13 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
        
        tela.setVisible(true);
     }//GEN-LAST:event_MenuItemMovimentacaoActionPerformed
+
+    private void MenuItemCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemCategoriaActionPerformed
+        TelaCategoria tela = new TelaCategoria();
+        desktopPane.add(tela);
+        
+        tela.setVisible(true);
+    }//GEN-LAST:event_MenuItemCategoriaActionPerformed
 
     /**
      * @param args the command line arguments
