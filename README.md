@@ -101,7 +101,7 @@ Desenvolver um software capaz de:
 | Samuel Arci Ramalho Mury | 1072619317 | https://github.com/Samuelmury |
 | Nicolas Levandowski | 1072615761 | https://github.com/nickevisck |
 | Eduardo Rodrigues Chaves | 10726112078 | https://github.com/durc1 |
-| João Marcos Mesquita da Silva | A DEFINIR | https://github.com/Joao-Ms12 |
+| João Marcos Mesquita da Silva | 1072618748 | https://github.com/Joao-Ms12 |
 
 ---
 
