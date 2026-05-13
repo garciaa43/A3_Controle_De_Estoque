@@ -4,8 +4,10 @@
  */
 package view;
 
+import bo.MovimentacaoBO;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import model.Movimentacao;
 
 /**
  *
@@ -13,16 +15,14 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  */
 public class TelaMovimentacao extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form TelaMovimentacao
-     */
+    private MovimentacaoBO objMovimentacao = new MovimentacaoBO();
+    
     public TelaMovimentacao() {
         initComponents();
-        
-        
-         ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
 
-    setBorder(null);
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+
+        setBorder(null);
     }
 
     /**
@@ -137,18 +137,46 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
             String nomeProduto = TxtNomeProduto.getText();
             String data = TxtDataMovimentacao.getText();
             String qntdMovimentada = TxtQntdMovimentada.getText();
-            String tipoMovimentacao = comboBoxTipodeMovimentacao.getActionCommand();
-            
-            if(nomeProduto.isEmpty() || data.isEmpty() || qntdMovimentada.isEmpty() || tipoMovimentacao.isEmpty()) {
+            String tipoMovimentacao = comboBoxTipodeMovimentacao.getSelectedItem().toString();
+
+            if (nomeProduto.isEmpty() || data.isEmpty() || qntdMovimentada.isEmpty() || tipoMovimentacao.isEmpty()) {
                 throw new Mensagem("Todos os campos devem ser preenchidos.");
             }
+
+            if (nomeProduto.matches(".*\\d.*")) {
+                throw new Mensagem("O nome do produto não pode conter números.");
+            }
+
+            if (!qntdMovimentada.matches("\\d+")) {
+                throw new Mensagem("A quantidade deve conter apenas números.");
+            }
+            
+            int quantidade = Integer.parseInt(qntdMovimentada);
+            
+            boolean cadastrou = objMovimentacao.insertMovimentacao(
+                        nomeProduto,
+                        data,
+                        quantidade,
+                        tipoMovimentacao
+                        );
+            
+            if (cadastrou) {
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Aluno cadastrado com sucesso!"
+                );
+
+                limparCampos();
+            }
+
         } catch (Mensagem e) {
             JOptionPane.showMessageDialog(
-            null,
-            e.getMessage(),
-            "Erro",
-            JOptionPane.ERROR_MESSAGE
-        );
+                    null,
+                    e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
@@ -176,4 +204,10 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     // End of variables declaration//GEN-END:variables
+
+    private void limparCampos() {
+        TxtNomeProduto.setText("");
+        TxtDataMovimentacao.setText("");
+        TxtQntdMovimentada.setText("");
+    }
 }
