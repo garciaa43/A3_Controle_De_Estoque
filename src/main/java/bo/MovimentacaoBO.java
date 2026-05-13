@@ -3,6 +3,7 @@ package bo;
 
 import dao.MovimentacaoDAO;
 import dao.ProdutoDAO;
+import java.util.ArrayList;
 import model.Movimentacao;
 
 
@@ -22,5 +23,14 @@ public class MovimentacaoBO {
         dao.insertMovimentacao(objeto);
         
         return true;
+    }
+
+    public boolean deleteMovimentacaoBO(int id) {
+        dao.deleteMovimentacao(id);
+        return true;
+    }
+
+    public ArrayList<Movimentacao> listarTodos() {
+        return dao.listarTodos();
     }
 }

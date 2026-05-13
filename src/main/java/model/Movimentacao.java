@@ -4,7 +4,11 @@ import dao.MovimentacaoDAO;
 
 
 public class Movimentacao {
+    private int id;
     private int id_produto;
+    private String nomeProduto;
+
+   
     private String dataMovimentacao;
     private int qntdMovimentada;
     private String tipoMovimentacao;
@@ -12,7 +16,13 @@ public class Movimentacao {
     
     private MovimentacaoDAO dao;
         
-   
+   public Movimentacao(int id, String nomeProduto, String dataMovimentacao, int qntdMovimentada, String tipoMovimentacao) {
+    this.id = id;
+    this.nomeProduto = nomeProduto;
+    this.dataMovimentacao = dataMovimentacao;
+    this.qntdMovimentada = qntdMovimentada;
+    this.tipoMovimentacao = tipoMovimentacao;
+}
  
     public Movimentacao(int id_produto, String dataMovimentacao, int qntdMovimentada, String tipoMovimentacao) {
         this.id_produto = id_produto;
@@ -24,9 +34,7 @@ public class Movimentacao {
     public Movimentacao() {
     }
 
-    public void setId_Produto(int nomeProduto) {
-        this.id_produto = id_produto;
-    }
+    
 
     public void setDataMovimentacao(String dataMovimentacao) {
         this.dataMovimentacao = dataMovimentacao;
@@ -40,9 +48,7 @@ public class Movimentacao {
         this.tipoMovimentacao = tipoMovimentacao;
     }
 
-    public int getId_Produto() {
-        return id_produto;
-    }
+    
 
     public String getDataMovimentacao() {
         return dataMovimentacao;
@@ -55,6 +61,32 @@ public class Movimentacao {
     public String getTipoMovimentacao() {
         return tipoMovimentacao;
     }
+    
+     public void setId_produto(int id_produto) {
+        this.id_produto = id_produto;
+    }
+
+    public void setNomeProduto(String nomeProduto) {
+        this.nomeProduto = nomeProduto;
+    }
+
+    public int getId_produto() {
+        return id_produto;
+    }
+
+    public String getNomeProduto() {
+        return nomeProduto;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
     
     @Override
     public String toString() {

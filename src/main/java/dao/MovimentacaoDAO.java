@@ -3,11 +3,17 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import model.Movimentacao;
 
 public class MovimentacaoDAO {
 
+    private ArrayList<Movimentacao> minhaLista = new ArrayList<>();
+    
+    
     public Connection getConexao() {
         Connection connection = null; //instância da conexão
         try {
@@ -46,7 +52,7 @@ public class MovimentacaoDAO {
             Connection conn = getConexao();
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            stmt.setInt(1, objeto.getId_Produto());
+            stmt.setInt(1, objeto.getId_produto());
             stmt.setString(2, objeto.getDataMovimentacao());
             stmt.setInt(3, objeto.getQntdMovimentada());
             stmt.setString(4, objeto.getTipoMovimentacao());
@@ -61,8 +67,67 @@ public class MovimentacaoDAO {
             e.printStackTrace();
             return false;
         }
-        
-        
+
     }
 
+    public boolean deleteMovimentacao(int id) {
+        try {
+            Statement stmt = this.getConexao().createStatement();
+            stmt.executeUpdate("DELETE FROM Movimentacao WHERE id_movimentacao = " + id);
+            stmt.close();
+        } catch (SQLException erro) {
+            System.out.println("Erro:" + erro);
+        }
+        return true;
+
+    }
+
+    public ArrayList<Movimentacao> listarTodos() {
+
+        minhaLista.clear();
+
+        try {
+
+            Statement stmt = this.getConexao().createStatement();
+
+            ResultSet res = stmt.executeQuery(
+                    "SELECT m.data, m.quantidade, m.tipo, p.nome, m.id_movimentacao "
+                    + "FROM Movimentacao m "
+                    + "INNER JOIN Produto p "
+                    + "ON m.id_produto = p.id_produto"
+            );
+
+            while (res.next()) {
+                int id = res.getInt("id_movimentacao");
+                String nomeProduto = res.getString("nome");
+
+                String data = res.getString("data");
+
+                int quantidade = res.getInt("quantidade");
+
+                String tipo = res.getString("tipo");
+
+                Movimentacao objeto = new Movimentacao(
+                        id,
+                        nomeProduto,
+                        data,
+                        quantidade,
+                        tipo
+                );
+
+                minhaLista.add(objeto);
+            }
+
+            res.close();
+            stmt.close();
+
+        } catch (SQLException ex) {
+
+            ex.printStackTrace();
+        }
+
+        return minhaLista;
+    }
 }
+
+
