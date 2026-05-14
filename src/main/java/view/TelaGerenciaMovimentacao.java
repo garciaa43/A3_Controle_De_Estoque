@@ -11,20 +11,17 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import model.Movimentacao;
 
-
-
 public class TelaGerenciaMovimentacao extends javax.swing.JInternalFrame {
 
     private MovimentacaoBO objMovimentacao = new MovimentacaoBO();
-    
-    
+
     public TelaGerenciaMovimentacao() {
         initComponents();
-        
-        ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
 
-    setBorder(null);
-    this.carregaTabela();
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+
+        setBorder(null);
+        this.carregaTabela();
     }
 
     /**
@@ -60,7 +57,7 @@ public class TelaGerenciaMovimentacao extends javax.swing.JInternalFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID ", "Produto", "Data Movimentação", "Quantidade Movimentada", "Tipo"
+                "ID Movimentação", "Produto", "Data Movimentação", "Quantidade Movimentada", "Tipo"
             }
         ));
         jTableMovimentacao.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -93,9 +90,9 @@ public class TelaGerenciaMovimentacao extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(282, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
@@ -112,7 +109,7 @@ public class TelaGerenciaMovimentacao extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(TxtDataMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(TxtNomeProduto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(269, 269, 269))
+                .addGap(307, 307, 307))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,45 +145,95 @@ public class TelaGerenciaMovimentacao extends javax.swing.JInternalFrame {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         try {
             int linha = jTableMovimentacao.getSelectedRow();
-            
-            if(linha == -1) {
+
+            if (linha == -1) {
                 btnExcluir.setEnabled(false);
             } else {
                 int id = Integer.parseInt(jTableMovimentacao.getValueAt(linha, 0).toString());
                 int repostaUsuario = JOptionPane.showConfirmDialog(
-            null,
-            "Tem certeza que deseja apagar essa movimentação??"
-        );
-                if(repostaUsuario == JOptionPane.YES_OPTION) {
-                    boolean apagou = objMovimentacao.deleteMovimentacaoBO(id);
-                    
-                    if(apagou) {
-                        JOptionPane.showMessageDialog(
-                    rootPane,
-                    "Aluno apagado com sucesso!"
+                        null,
+                        "Tem certeza que deseja apagar essa movimentação??"
                 );
+                if (repostaUsuario == JOptionPane.YES_OPTION) {
+                    boolean apagou = objMovimentacao.deleteMovimentacaoBO(id);
 
-                limparCampos();
+                    if (apagou) {
+                        JOptionPane.showMessageDialog(
+                                rootPane,
+                                "Aluno apagado com sucesso!"
+                        );
+
+                        limparCampos();
                     }
                 }
             }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(
-                null,
-                e.getMessage(),
-                "Erro",
-                JOptionPane.ERROR_MESSAGE
+                    null,
+                    e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
             );
         } finally {
 
-        
-        carregaTabela();
-    } 
+            carregaTabela();
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        // TODO add your handling code here:
+        try {
+            int linha = jTableMovimentacao.getSelectedRow();
+
+            if (linha == -1) {
+                throw new Mensagem(
+                        "Selecione um aluno para alterar."
+                );
+            }
+            String nomeProduto = TxtNomeProduto.getText();
+            String data = TxtDataMovimentacao.getText();
+            String qntdMovimentada = TxtQntdMovimentada.getText();
+            String tipoMovimentacao = comboBoxTipodeMovimentacao.getSelectedItem().toString();
+
+            if (nomeProduto.matches(".*\\d.*")) {
+                throw new Mensagem("O nome do produto não pode conter números.");
+            }
+
+            if (data.isEmpty()) {
+                throw new Mensagem("Informe uma data.");
+            }
+
+            if (!qntdMovimentada.matches("\\d+")) {
+                throw new Mensagem("A quantidade deve conter apenas números.");
+            }
+
+            int id = Integer.parseInt(
+                    jTableMovimentacao.getValueAt(linha, 0).toString()
+            );
+            
+            int quantidade = Integer.parseInt(qntdMovimentada);
+
+            boolean alterou = objMovimentacao.atualizarMovimentacao(id,nomeProduto, data, quantidade, tipoMovimentacao);
+
+            if (alterou) {
+
+            JOptionPane.showMessageDialog(
+                rootPane,
+                "Movimentação alterada com sucesso!"
+            );
+
+            carregaTabela();
+            limparCampos();
+        }
+            
+        } catch (Mensagem e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -209,19 +256,19 @@ public class TelaGerenciaMovimentacao extends javax.swing.JInternalFrame {
     public void carregaTabela() {
         DefaultTableModel modelo = (DefaultTableModel) this.jTableMovimentacao.getModel();
         modelo.setNumRows(0);
-        
+
         ArrayList<Movimentacao> minhaLista = objMovimentacao.listarTodos();
-        for(Movimentacao m : minhaLista) {
+        for (Movimentacao m : minhaLista) {
             modelo.addRow(new Object[]{
                 m.getId(),
                 m.getNomeProduto(),
                 m.getDataMovimentacao(),
                 m.getQntdMovimentada(),
-                m.getTipoMovimentacao()          
+                m.getTipoMovimentacao()
             });
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TxtDataMovimentacao;
     private javax.swing.JTextField TxtNomeProduto;

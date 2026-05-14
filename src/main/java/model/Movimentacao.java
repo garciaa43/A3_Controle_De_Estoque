@@ -86,8 +86,7 @@ public class Movimentacao {
         this.id = id;
     }
     
-    
-    
+        
     @Override
     public String toString() {
         return "ID do Produto: " + id_produto 

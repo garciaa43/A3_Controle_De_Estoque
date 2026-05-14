@@ -12,8 +12,7 @@ import model.Movimentacao;
 public class MovimentacaoDAO {
 
     private ArrayList<Movimentacao> minhaLista = new ArrayList<>();
-    
-    
+
     public Connection getConexao() {
         Connection connection = null; //instância da conexão
         try {
@@ -128,6 +127,22 @@ public class MovimentacaoDAO {
 
         return minhaLista;
     }
+
+    public boolean atualizarMovimentacao(Movimentacao movimentacao) {
+        String sql = "UPDATE Movimentacao set data = ? ,quantidade = ? ,tipo = ? WHERE id_movimentacao = ?";
+        try {
+            PreparedStatement stmt = this.getConexao().prepareStatement(sql);
+            stmt.setString(1, movimentacao.getDataMovimentacao());
+            stmt.setInt(2, movimentacao.getQntdMovimentada());
+            stmt.setString(3, movimentacao.getTipoMovimentacao());
+            stmt.setInt(4, movimentacao.getId());
+            stmt.execute();
+            stmt.close();
+            return true;
+        } catch (SQLException erro) {
+            System.out.println("Erro:" + erro);
+            throw new RuntimeException(erro);
+        }
+
+    }
 }
-
-

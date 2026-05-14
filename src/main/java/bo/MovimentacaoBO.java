@@ -11,6 +11,7 @@ public class MovimentacaoBO {
     
     private MovimentacaoDAO dao = new MovimentacaoDAO();
     private ProdutoDAO produtoDAO = new ProdutoDAO();
+   
     
     
     
@@ -32,5 +33,11 @@ public class MovimentacaoBO {
 
     public ArrayList<Movimentacao> listarTodos() {
         return dao.listarTodos();
+    }
+
+    public boolean atualizarMovimentacao(int id,String nomeProduto, String data, int qntd, String tipoMovimentacao) {
+        Movimentacao movimentacao = new Movimentacao(id, nomeProduto, data, qntd, tipoMovimentacao);
+        dao.atualizarMovimentacao(movimentacao);
+        return true;
     }
 }
