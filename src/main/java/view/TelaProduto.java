@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package view;
-
+import javax.swing.JOptionPane;
 /**
  *
  * @author Weslen
@@ -26,21 +26,137 @@ public class TelaProduto extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        comboBoxTipodeMovimentacao = new javax.swing.JComboBox<>();
+        btnCadastrar = new javax.swing.JButton();
+        BtnGerenciar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        btnSair = new javax.swing.JButton();
+        TxtNomeProduto = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        TxtDataMovimentacao = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        TxtQntdMovimentada = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+
+        comboBoxTipodeMovimentacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada", "Saida" }));
+
+        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.addActionListener(this::btnCadastrarActionPerformed);
+
+        BtnGerenciar.setText("Gerenciar");
+        BtnGerenciar.addActionListener(this::BtnGerenciarActionPerformed);
+
+        jLabel2.setText("Nome do Produto: ");
+
+        btnSair.setText("Sair");
+        btnSair.addActionListener(this::btnSairActionPerformed);
+
+        jLabel3.setText("Data:");
+
+        jLabel4.setText("Quantidade Movimentada: ");
+
+        jLabel6.setText("Tipo da Movimentação:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGap(0, 553, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(63, 63, 63)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnCadastrar)
+                            .addGap(18, 18, 18)
+                            .addComponent(BtnGerenciar)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnSair))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(5, 5, 5)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(TxtNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3)
+                                .addComponent(TxtDataMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4)
+                                .addComponent(TxtQntdMovimentada, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6)
+                                .addComponent(comboBoxTipodeMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addContainerGap(222, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGap(0, 416, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel2)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(TxtNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel3)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(TxtDataMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel4)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(TxtQntdMovimentada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(12, 12, 12)
+                    .addComponent(jLabel6)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(comboBoxTipodeMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCadastrar)
+                        .addComponent(BtnGerenciar)
+                        .addComponent(btnSair))
+                    .addContainerGap()))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        try {
+            String nomeProduto = TxtNomeProduto.getText();
+            String data = TxtDataMovimentacao.getText();
+            String qntdMovimentada = TxtQntdMovimentada.getText();
+            String tipoMovimentacao = comboBoxTipodeMovimentacao.getActionCommand();
+
+            if(nomeProduto.isEmpty() || data.isEmpty() || qntdMovimentada.isEmpty() || tipoMovimentacao.isEmpty()) {
+                throw new Mensagem("Todos os campos devem ser preenchidos.");
+            }
+        } catch (Mensagem e) {
+            JOptionPane.showMessageDialog(
+                null,
+                e.getMessage(),
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void BtnGerenciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGerenciarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnGerenciarActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSairActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnGerenciar;
+    private javax.swing.JTextField TxtDataMovimentacao;
+    private javax.swing.JTextField TxtNomeProduto;
+    private javax.swing.JTextField TxtQntdMovimentada;
+    private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnSair;
+    private javax.swing.JComboBox<String> comboBoxTipodeMovimentacao;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
     // End of variables declaration//GEN-END:variables
 }
