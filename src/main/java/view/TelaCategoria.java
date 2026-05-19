@@ -4,6 +4,8 @@
  */
 package view;
 
+import bo.CategoriaBO;
+import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -16,12 +18,16 @@ public class TelaCategoria extends javax.swing.JInternalFrame {
     /**
      * Creates new form TelaCategoria
      */
+    private CategoriaBO objeto = new CategoriaBO();
+    private JDesktopPane desktopPane;
+    
     public TelaCategoria() {
         initComponents();
         
         ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
 
     setBorder(null);
+    this.desktopPane = desktopPane; 
     }
 
     /**
@@ -114,12 +120,27 @@ public class TelaCategoria extends javax.swing.JInternalFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         try {
             String nomeCategoria = TxtNomeCategoria.getText();
-            String embalagem = comboBoxEmbalagem.getActionCommand();
-            String tamanho = comboBoxTamanho.getActionCommand();
+            String embalagem = comboBoxEmbalagem.getSelectedItem().toString();
+            String tamanho = comboBoxTamanho.getSelectedItem().toString();
 
             if(nomeCategoria.isEmpty() || embalagem.isEmpty() || tamanho.isEmpty()) {
                 throw new Mensagem("Todos os campos devem ser preenchidos.");
             }
+            
+             boolean cadastrou = objeto.insertCategoria(nomeCategoria, embalagem, tamanho);
+            
+             if (cadastrou){
+             
+              JOptionPane.showMessageDialog(
+                        null,
+                        "Aluno cadastrado com sucesso!"
+                );
+
+                limparCampos();
+             }
+            
+            
+            
         } catch (Mensagem e) {
             JOptionPane.showMessageDialog(
                 null,
@@ -154,4 +175,9 @@ public class TelaCategoria extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
+
+    private void limparCampos() {
+        TxtNomeCategoria.setText("");
+        
+    }
 }
