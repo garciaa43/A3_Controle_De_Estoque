@@ -6,7 +6,7 @@ public class Categoria {
     private String tamanho;
     private String embalegem;
 
-    public Categoria() {
+    public Categoria(int id, String nomeCategoria, String tamanho1, String embalagem) {
     }
 
     public Categoria(String nome, String tamanho, String embalegem) {

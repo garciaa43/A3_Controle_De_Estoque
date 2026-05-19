@@ -1,6 +1,7 @@
 package bo;
 
 import dao.CategoriaDAO;
+import java.util.ArrayList;
 import model.Categoria;
 
 public class CategoriaBO {
@@ -13,6 +14,9 @@ public class CategoriaBO {
         dao.insertCategoriaDAO(objeto);
         return true;
 
+    }
+ public ArrayList<Categoria> listarTodos() {
+        return dao.listarTodos();
     }
 
 }

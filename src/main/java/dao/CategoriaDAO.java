@@ -7,7 +7,10 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import model.Categoria;
 
 
@@ -17,7 +20,8 @@ import model.Categoria;
  */
 public class CategoriaDAO {
 
-    
+        private ArrayList<Categoria> minhaLista = new ArrayList<>();
+
  
 
     public Connection getConexao() {
@@ -76,4 +80,48 @@ public class CategoriaDAO {
         }
 
     }
+
+    public ArrayList<Categoria> listarTodos() {
+
+        minhaLista.clear();
+
+        try {
+
+            Statement stmt = this.getConexao().createStatement();
+
+            ResultSet res = stmt.executeQuery(
+                    "SELECT * FROM Categoria;"
+            );
+
+            while (res.next()) {
+                int id = res.getInt("id_categoria");
+                String nomeCategoria = res.getString("nome");
+
+                String tamanho = res.getString("tamanho");
+
+                String embalagem = res.getString("embalagem");
+
+
+                Categoria objeto = new Categoria(
+                        id,
+                        nomeCategoria,
+                        tamanho,
+                        embalagem
+                       
+                );
+
+                minhaLista.add(objeto);
+            }
+
+            res.close();
+            stmt.close();
+
+        } catch (SQLException ex) {
+
+            ex.printStackTrace();
+        }
+
+        return minhaLista;
+    }
+    
 }
