@@ -1,43 +1,47 @@
-
 package bo;
 
-import dao.MovimentacaoDAO;
 import dao.ProdutoDAO;
-import java.util.ArrayList;
-import model.Movimentacao;
+import model.Produto;
 
+import java.util.List;
 
 public class ProdutoBO {
-    
-    private MovimentacaoDAO dao = new MovimentacaoDAO();
-    private ProdutoDAO produtoDAO = new ProdutoDAO();
-   
-    
-    
-    
-    public boolean insertMovimentacao(String nomeProduto, String data, int qntdMovimentada, String tipoMovimentacao) {
-        
-         int produto = produtoDAO.procurarIdPorNome(nomeProduto);
-         
-         
-        Movimentacao objeto = new Movimentacao(produto, data, qntdMovimentada, tipoMovimentacao);
-        dao.insertMovimentacao(objeto);
-        
-        return true;
+
+    ProdutoDAO dao = new ProdutoDAO();
+
+    // CADASTRAR
+    public void cadastrar(Produto produto) {
+
+        if (produto.getNome().isEmpty()) {
+
+            System.out.println("Nome obrigatório!");
+            return;
+        }
+
+        if (produto.getPreco() <= 0) {
+
+            System.out.println("Preço inválido!");
+            return;
+        }
+
+        dao.cadastrar(produto);
     }
 
-    public boolean deleteMovimentacaoBO(int id) {
-        dao.deleteMovimentacao(id);
-        return true;
+    // LISTAR
+    public List<Produto> listar() {
+
+        return dao.listar();
     }
 
-    public ArrayList<Movimentacao> listarTodos() {
-        return dao.listarTodos();
+    // ATUALIZAR
+    public void atualizar(Produto produto) {
+
+        dao.atualizar(produto);
     }
 
-    public boolean atualizarMovimentacao(int id,String nomeProduto, String data, int qntd, String tipoMovimentacao) {
-        Movimentacao movimentacao = new Movimentacao(id, nomeProduto, data, qntd, tipoMovimentacao);
-        dao.atualizarMovimentacao(movimentacao);
-        return true;
+    // EXCLUIR
+    public void excluir(int id) {
+
+        dao.excluir(id);
     }
 }

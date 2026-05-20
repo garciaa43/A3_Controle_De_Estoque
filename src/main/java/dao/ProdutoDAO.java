@@ -1,5 +1,6 @@
-
 package dao;
+
+import model.Produto;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,64 +8,136 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- *
- * @author Weslen
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProdutoDAO {
 
-    public Connection getConexao() {
-        Connection connection = null; //instância da conexão
-        try {
+    private final String URL =
+            "jdbc:mysql://localhost:3306/estoque";
 
-            String driver = "com.mysql.cj.jdbc.Driver";
-            Class.forName(driver);
+    private final String USER = "root";
 
-            String server = "localhost";
-            String database = "a3_controle_de_estoque";
-            String url = "jdbc:mysql://" + server + ":3306/"
-                    + database + "?useTimezone=true&serverTimezone=UTC";
-            String user = "root";
-            String password = "1234";
+    private final String PASSWORD = "";
 
-            connection = DriverManager.getConnection(url, user, password);
+    // MÉTODO DE CONEXÃO
+    public Connection conectar() throws SQLException {
 
-            if (connection != null) {
-                System.out.println("Status: Conectado!");
-            } else {
-                System.out.println("Status: NÃO CONECTADO!");
-            }
-            return connection;
-        } catch (ClassNotFoundException e) { //Driver não encontrado
-            System.out.println("O driver nao foi encontrado.");
-            return null;
+        return DriverManager.getConnection(
+                URL,
+                USER,
+                PASSWORD
+        );
+    }
+
+    // CADASTRAR
+    public void cadastrar(Produto produto) {
+
+        String sql =
+                "INSERT INTO produto(nome, quantidade, preco) VALUES (?, ?, ?)";
+
+        try (
+                Connection conn = conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setString(1, produto.getNome());
+            stmt.setInt(2, produto.getQuantidade());
+            stmt.setDouble(3, produto.getPreco());
+
+            stmt.executeUpdate();
+
+            System.out.println("Produto cadastrado!");
+
         } catch (SQLException e) {
-            System.out.println("Nao foi possivel conectar...");
-            return null;
+
+            System.out.println("Erro ao cadastrar produto");
+            e.printStackTrace();
         }
     }
 
-    public int procurarIdPorNome(String nomeProduto) {
+    // LISTAR
+    public List<Produto> listar() {
 
-        String sql = "SELECT id_produto FROM Produto WHERE nome = ?";
+        List<Produto> lista = new ArrayList<>();
 
-        try {
-            Connection conn = getConexao();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        String sql = "SELECT * FROM produto";
 
-            stmt.setString(1, nomeProduto);
+        try (
+                Connection conn = conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()
+        ) {
 
-            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
 
-            if (rs.next()) {
-                return rs.getInt("id_produto");
+                Produto produto = new Produto();
+
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setQuantidade(rs.getInt("quantidade"));
+                produto.setPreco(rs.getDouble("preco"));
+
+                lista.add(produto);
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
+
+            System.out.println("Erro ao listar produtos");
             e.printStackTrace();
         }
 
-        return -1;
+        return lista;
     }
 
+    // EDITAR
+    public void atualizar(Produto produto) {
+
+        String sql =
+                "UPDATE produto SET nome=?, quantidade=?, preco=? WHERE id=?";
+
+        try (
+                Connection conn = conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setString(1, produto.getNome());
+            stmt.setInt(2, produto.getQuantidade());
+            stmt.setDouble(3, produto.getPreco());
+            stmt.setInt(4, produto.getId());
+
+            stmt.executeUpdate();
+
+            System.out.println("Produto atualizado!");
+
+        } catch (SQLException e) {
+
+            System.out.println("Erro ao atualizar produto");
+            e.printStackTrace();
+        }
+    }
+
+    // EXCLUIR
+    public void excluir(int id) {
+
+        String sql =
+                "DELETE FROM produto WHERE id=?";
+
+        try (
+                Connection conn = conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setInt(1, id);
+
+            stmt.executeUpdate();
+
+            System.out.println("Produto excluído!");
+
+        } catch (SQLException e) {
+
+            System.out.println("Erro ao excluir produto");
+            e.printStackTrace();
+        }
+    }
 }

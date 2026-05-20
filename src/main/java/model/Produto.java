@@ -1,37 +1,26 @@
 package model;
 
-import java.util.ArrayList;
-import dao.ProdutoDAO;
-
 public class Produto {
-    
+
     private int id;
-    private double preco;
-    private String unidade;
-    private String categoria;
-    private String produto;
+    private String nome;
     private int quantidade;
-    private int quantidademax;
-    private int quantidademin;
-    private ProdutoDAO dao;
-    
+    private double preco;
 
+    // CONSTRUTOR VAZIO
     public Produto() {
-        this(0, "", 0, "", "", 0, 0, 0);
     }
 
-    public Produto(int id, String produto, double preco, String unidade,
-            String categoria, int quantidade, int quantidademax, int quantidademin) {
+    // CONSTRUTOR COMPLETO
+    public Produto(int id, String nome, int quantidade, double preco) {
+
         this.id = id;
-        this.preco = preco;
-        this.unidade = unidade;
-        this.categoria = categoria;
-        this.produto = produto;
+        this.nome = nome;
         this.quantidade = quantidade;
-        this.quantidademax = quantidademax;
-        this.quantidademin = quantidademin;
-        this.dao = new ProdutoDAO();
+        this.preco = preco;
     }
+
+    // GETTERS E SETTERS
 
     public int getId() {
         return id;
@@ -41,36 +30,12 @@ public class Produto {
         this.id = id;
     }
 
-    public double getPreco() {
-        return preco;
+    public String getNome() {
+        return nome;
     }
 
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
-
-    public String getUnidade() {
-        return unidade;
-    }
-
-    public void setUnidade(String unidade) {
-        this.unidade = unidade;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public String getProduto() {
-        return produto;
-    }
-
-    public void setProduto(String produto) {
-        this.produto = produto;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public int getQuantidade() {
@@ -81,29 +46,11 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public int getQuantidademax() {
-        return quantidademax;
+    public double getPreco() {
+        return preco;
     }
 
-    public void setQuantidademax(int quantidademax) {
-        this.quantidademax = quantidademax;
-    }
-
-    public int getQuantidademin() {
-        return quantidademin;
-    }
-
-    public void setQuantidademin(int quantidademin) {
-        this.quantidademin = quantidademin;
-    }
-
-    public ProdutoDAO getDAO() {
-        return dao;
-    }
-
-    public void setDao(ProdutoDAO dao) {
-        this.dao = dao;
+    public void setPreco(double preco) {
+        this.preco = preco;
     }
 }
-    
-    
