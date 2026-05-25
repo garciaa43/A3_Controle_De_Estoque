@@ -39,6 +39,7 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
         MenuItemMovimentacao = new javax.swing.JMenuItem();
         MenuItemProduto = new javax.swing.JMenuItem();
         MenuItemCategoria = new javax.swing.JMenuItem();
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         Fechar = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -91,6 +92,11 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
         MenuItemCategoria.addActionListener(this::MenuItemCategoriaActionPerformed);
         MenuTelas.add(MenuItemCategoria);
 
+        jCheckBoxMenuItem1.setSelected(true);
+        jCheckBoxMenuItem1.setText("Relatorios");
+        jCheckBoxMenuItem1.addActionListener(this::jCheckBoxMenuItem1ActionPerformed);
+        MenuTelas.add(jCheckBoxMenuItem1);
+
         jMenuBar1.add(MenuTelas);
 
         Fechar.setText("Fechar");
@@ -126,19 +132,26 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_FecharMouseClicked
 
     private void MenuItemMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemMovimentacaoActionPerformed
-       TelaMovimentacao tela = new TelaMovimentacao(desktopPane);
-       
-       desktopPane.add(tela);
-       
-       tela.setVisible(true);
+        TelaMovimentacao tela = new TelaMovimentacao(desktopPane);
+
+        desktopPane.add(tela);
+
+        tela.setVisible(true);
     }//GEN-LAST:event_MenuItemMovimentacaoActionPerformed
 
     private void MenuItemCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemCategoriaActionPerformed
         TelaCategoria tela = new TelaCategoria();
         desktopPane.add(tela);
-        
+
         tela.setVisible(true);
     }//GEN-LAST:event_MenuItemCategoriaActionPerformed
+
+    private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
+        TelaRelatorios tela = new TelaRelatorios();
+        desktopPane.add(tela);
+
+        tela.setVisible(true);
+    }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,6 +185,7 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuItemProduto;
     private javax.swing.JMenu MenuTelas;
     private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;

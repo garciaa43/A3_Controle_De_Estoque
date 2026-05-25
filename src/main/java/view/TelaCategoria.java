@@ -49,6 +49,8 @@ public class TelaCategoria extends javax.swing.JInternalFrame {
         comboBoxTamanho = new javax.swing.JComboBox<>();
         comboBoxEmbalagem = new javax.swing.JComboBox<>();
 
+        setPreferredSize(new java.awt.Dimension(879, 571));
+
         btnCadastrar.setText("Cadastrar");
         btnCadastrar.addActionListener(this::btnCadastrarActionPerformed);
 

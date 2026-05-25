@@ -1,9 +1,11 @@
 package bo;
 
 import dao.ProdutoDAO;
+import java.util.ArrayList;
 import model.Produto;
 
 import java.util.List;
+import model.Movimentacao;
 
 public class ProdutoBO {
 
@@ -43,5 +45,10 @@ public class ProdutoBO {
     public void excluir(int id) {
 
         dao.excluir(id);
+    }
+
+    public ArrayList<Produto> listarPrecosPorProdutos() {
+
+        return dao.listarPrecosPorProdutos();
     }
 }
