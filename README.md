@@ -97,224 +97,88 @@ Desenvolver um software capaz de:
 
 ## ✅ Requisitos Funcionais
 
-### RF01 — Cadastro de Produtos
-O sistema deve permitir o cadastro de produtos contendo:
-- Nome
-- Categoria
-- Preço unitário
-- Unidade
-- Quantidade em estoque
-- Quantidade mínima
-- Quantidade máxima
+### 📦 Produtos
+| Código | Descrição |
+|---|---|
+| RF01 | O sistema deve permitir cadastrar produtos. |
+| RF02 | O sistema deve validar campos obrigatórios e numéricos no cadastro de produtos. |
+| RF03 | O sistema deve permitir consultar produtos cadastrados. |
+| RF04 | O sistema deve permitir alterar produtos cadastrados. |
+| RF05 | O sistema deve permitir excluir produtos cadastrados. |
+| RF06 | O sistema deve possuir uma tela de gerenciamento de produtos. |
 
 ---
 
-### RF02 — Validação de Cadastro de Produtos
-O sistema deve validar:
-- Campos obrigatórios
-- Campos numéricos
-- Campos textuais sem números indevidos
+### 🗂️ Categorias
+| Código | Descrição |
+|---|---|
+| RF07 | O sistema deve permitir cadastrar categorias. |
+| RF08 | O sistema deve permitir consultar categorias cadastradas. |
+| RF09 | O sistema deve permitir alterar categorias cadastradas. |
+| RF10 | O sistema deve permitir excluir categorias cadastradas. |
+| RF11 | O sistema deve possuir uma tela de gerenciamento de categorias. |
 
 ---
 
-### RF03 — Consulta de Produtos
-O sistema deve permitir visualizar os produtos cadastrados.
+### 🔄 Movimentações
+| Código | Descrição |
+|---|---|
+| RF12 | O sistema deve permitir registrar movimentações de estoque. |
+| RF13 | O sistema deve permitir registrar entrada de produtos. |
+| RF14 | O sistema deve permitir registrar saída de produtos. |
+| RF15 | O sistema deve atualizar automaticamente o estoque após movimentações. |
+| RF16 | O sistema deve identificar produtos abaixo da quantidade mínima. |
+| RF17 | O sistema deve controlar o limite máximo de produtos em estoque. |
 
 ---
 
-### RF04 — Alteração de Produtos
-O sistema deve permitir alterar os dados de um produto cadastrado.
+### 📊 Relatórios
+| Código | Descrição |
+|---|---|
+| RF18 | O sistema deve gerar relatório de lista de preços. |
+| RF19 | O sistema deve gerar relatório de produtos abaixo do mínimo. |
+| RF20 | O sistema deve gerar relatório de balanço físico/financeiro. |
+| RF21 | O sistema deve gerar relatório de produtos por categoria. |
+| RF22 | O sistema deve gerar relatório de produtos com maior entrada e saída. |
+| RF23 | O sistema deve atualizar automaticamente a tabela ao trocar o relatório. |
+| RF24 | O sistema deve permitir gerar relatórios em PDF. |
 
 ---
 
-### RF05 — Exclusão de Produtos
-O sistema deve permitir excluir produtos cadastrados.
-
----
-
-### RF06 — Gerenciamento de Produtos
-O sistema deve possuir uma tela de gerenciamento contendo:
-- Tabela de produtos
-- Botão alterar
-- Botão excluir
-- Botão sair/voltar
-
----
-
-### RF07 — Cadastro de Categorias
-O sistema deve permitir cadastrar categorias contendo:
-- Nome
-- Tamanho
-- Embalagem
-
----
-
-### RF08 — Consulta de Categorias
-O sistema deve permitir visualizar categorias cadastradas.
-
----
-
-### RF09 — Alteração de Categorias
-O sistema deve permitir alterar categorias cadastradas.
-
----
-
-### RF10 — Exclusão de Categorias
-O sistema deve permitir excluir categorias cadastradas.
-
----
-
-### RF11 — Gerenciamento de Categorias
-O sistema deve possuir uma tela de gerenciamento de categorias com:
-- Tabela de categorias
-- Botão alterar
-- Botão excluir
-- Botão sair
-
----
-
-### RF12 — Cadastro de Movimentações
-O sistema deve permitir registrar movimentações de estoque.
-
----
-
-### RF13 — Entrada de Produtos
-O sistema deve permitir registrar entrada de produtos no estoque.
-
----
-
-### RF14 — Saída de Produtos
-O sistema deve permitir registrar saída de produtos do estoque.
-
----
-
-### RF15 — Atualização Automática do Estoque
-O sistema deve atualizar automaticamente a quantidade em estoque após movimentações.
-
----
-
-### RF16 — Controle de Quantidade Mínima
-O sistema deve identificar produtos abaixo da quantidade mínima.
-
----
-
-### RF17 — Controle de Quantidade Máxima
-O sistema deve controlar limite máximo de produtos em estoque.
-
----
-
-### RF18 — Relatório de Lista de Preços
-O sistema deve gerar relatório contendo:
-- Nome do produto
-- Preço
-- Unidade
-- Categoria
-
----
-
-### RF19 — Relatório de Produtos Abaixo do Mínimo
-O sistema deve gerar relatório de produtos com estoque abaixo do mínimo.
-
----
-
-### RF20 — Relatório de Balanço Físico/Financeiro
-O sistema deve gerar relatório financeiro e quantitativo do estoque.
-
----
-
-### RF21 — Relatório de Produtos por Categoria
-O sistema deve gerar relatório agrupando produtos por categoria.
-
----
-
-### RF22 — Relatório de Produto com Maior Entrada/Saída
-O sistema deve identificar produtos com maior movimentação.
-
----
-
-### RF23 — Navegação entre Telas
-O sistema deve permitir acesso às telas através do menu principal.
-
----
-
-### RF24 — Encerramento do Sistema
-O sistema deve permitir fechar a aplicação através do menu ou botão sair.
+### 🖥️ Menu Principal e Navegação
+| Código | Descrição |
+|---|---|
+| RF25 | O sistema deve possuir uma tela principal com mensagem de boas-vindas. |
+| RF26 | O sistema deve permitir acesso às telas através do menu principal. |
+| RF27 | O sistema deve abrir telas internas dentro do `JDesktopPane`. |
+| RF28 | O sistema deve permitir encerrar a aplicação pelo menu “Fechar”. |
+| RF29 | O sistema deve centralizar a janela principal ao iniciar. |
+| RF30 | O sistema não deve permitir redimensionamento da janela principal. |
 
 ---
 
 # ⚙️ Requisitos Não Funcionais
 
-### RNF01 — Linguagem de Programação
-O sistema deve ser desenvolvido em Java.
+| Código | Descrição |
+|---|---|
+| RNF01 | O sistema deve ser desenvolvido em Java. |
+| RNF02 | O sistema deve utilizar Java Swing para interface gráfica. |
+| RNF03 | O sistema deve utilizar MySQL para armazenamento dos dados. |
+| RNF04 | O sistema deve utilizar JDBC para conexão com o banco de dados. |
+| RNF05 | O sistema deve utilizar arquitetura em camadas (View, BO, DAO e Model). |
+| RNF06 | O projeto deve utilizar Git e GitHub para versionamento. |
+| RNF07 | O sistema deve possuir tratamento de erros e exceções. |
+| RNF08 | O sistema deve validar os dados antes de salvar informações. |
+| RNF09 | O sistema deve possuir interface simples e intuitiva. |
+| RNF10 | O código deve ser organizado e de fácil manutenção. |
+| RNF11 | O sistema deve funcionar em ambientes compatíveis com Java. |
+| RNF12 | O sistema deve carregar tabelas e relatórios sem travamentos perceptíveis. |
+| RNF13 | O sistema deve permitir futuras expansões e novas funcionalidades. |
+| RNF14 | O sistema deve possuir segurança básica através de validações de entrada. |
+| RNF15 | O sistema deve atualizar tabelas e relatórios em tempo real. |
+| RNF16 | O sistema deve permitir carregamento dinâmico de registros nas tabelas. |
 
 ---
-
-### RNF02 — Interface Gráfica
-O sistema deve utilizar Java Swing para construção das telas.
-
----
-
-### RNF03 — Banco de Dados
-O sistema deve utilizar MySQL para armazenamento dos dados.
-
----
-
-### RNF04 — Persistência de Dados
-O sistema deve utilizar JDBC para conexão com o banco de dados.
-
----
-
-### RNF05 — Organização do Projeto
-O sistema deve utilizar separação em camadas:
-- View
-- BO
-- DAO
-- Model
-
----
-
-### RNF06 — Controle de Versão
-O projeto deve utilizar Git e GitHub para versionamento.
-
----
-
-### RNF07 — Tratamento de Erros
-O sistema deve possuir tratamento de exceções e mensagens de erro amigáveis.
-
----
-
-### RNF08 — Validação de Dados
-O sistema deve validar entradas do usuário antes de salvar dados.
-
----
-
-### RNF09 — Facilidade de Uso
-O sistema deve possuir interface simples e intuitiva.
-
----
-
-### RNF10 — Manutenção do Código
-O código deve ser organizado e de fácil manutenção.
-
----
-
-### RNF11 — Compatibilidade
-O sistema deve funcionar em ambientes compatíveis com Java.
-
----
-
-### RNF12 — Desempenho
-O sistema deve carregar tabelas e relatórios sem travamentos perceptíveis.
-
----
-
-### RNF13 — Escalabilidade
-O sistema deve permitir futuras implementações de novas funcionalidades.
-
----
-
-### RNF14 — Segurança Básica
-O sistema deve evitar falhas simples de entrada de dados através de validações.
 
 ## 👥 Integrantes
 
