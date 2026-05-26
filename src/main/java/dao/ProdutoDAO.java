@@ -14,7 +14,7 @@ import java.util.List;
 public class ProdutoDAO {
 
     private final String URL
-            = "jdbc:mysql://localhost:3306/estoque";
+            = "jdbc:mysql://localhost:3306/a3_controle_de_estoque";
 
     private final String USER = "root";
 
