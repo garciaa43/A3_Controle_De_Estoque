@@ -210,12 +210,12 @@ public class TelaProduto extends javax.swing.JInternalFrame {
                 throw new Mensagem("Todos os campos devem ser preenchidos.");
             }
             
-            boolean cadastrou = objMovimentacao.insertMovimentacao(
-                    nomeProduto,
-                    datx,
-                    quantidade,
-                    tipoMovimentacao
-            );
+       //     boolean cadastrou = objMovimentacao.insertMovimentacao(
+         //           nomeProduto,
+           //         datx,
+             //       quantidade,
+               //     tipoMovimentacao
+           // );
             
         } catch (Mensagem e) {
             JOptionPane.showMessageDialog(

@@ -36,7 +36,7 @@ public class CategoriaDAO {
             String url = "jdbc:mysql://" + server + ":3306/"
                     + database + "?useTimezone=true&serverTimezone=UTC";
             String user = "root";
-            String password = "@Kamura1207";
+            String password = "1234";
 
             connection = DriverManager.getConnection(url, user, password);
 
@@ -123,5 +123,24 @@ public class CategoriaDAO {
 
         return minhaLista;
     }
-    
+
+    public boolean atualizarCategoria(Categoria categoria) {
+        String sql = "UPDATE Categoria set nome = ? ,tamanho = ? ,emabalagem = ? WHERE id_categoria = ?";
+        try {
+            PreparedStatement stmt = this.getConexao().prepareStatement(sql);
+            stmt.setString(1, categoria.getNome());
+            stmt.setString(2, categoria.getTamanho());
+            stmt.setString(3, categoria.getEmbalegem());
+            stmt.setInt(4, categoria.getId_categoria());
+            stmt.execute();
+            stmt.close();
+            return true;
+        } catch (SQLException erro) {
+            System.out.println("Erro:" + erro);
+            throw new RuntimeException(erro);
+        }
+
+    }
 }
+    
+

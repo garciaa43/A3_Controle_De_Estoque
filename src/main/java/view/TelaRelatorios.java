@@ -6,6 +6,7 @@ package view;
 
 import bo.ProdutoBO;
 import java.util.ArrayList;
+import javax.swing.JDesktopPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import model.Produto;
@@ -14,7 +15,7 @@ public class TelaRelatorios extends javax.swing.JInternalFrame {
 
     private ProdutoBO objetoProduto = new ProdutoBO();
     
-    public TelaRelatorios() {
+    public TelaRelatorios(JDesktopPane desktopPane) {
         initComponents();
         
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);

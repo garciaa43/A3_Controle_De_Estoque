@@ -139,7 +139,7 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
             }
             String nomeCategoria = TxtNomeCategoria.getText();
             String embalagem = comboBoxEmbalagem.getSelectedItem().toString();
-            String tamnho = comboBoxTamanho.getSelectedItem().toString();
+            String tamanho = comboBoxTamanho.getSelectedItem().toString();
 
             if (nomeCategoria.matches(".*\\d.*")) {
                 throw new Mensagem("O nome do produto não pode conter números.");
@@ -149,7 +149,7 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
                     jTableCategoria.getValueAt(linha, 0).toString()
             );
 
-            boolean alterou = objetoCategoria.atualizarCategoria(id, nomeCategoria, embalagem, tamnho);
+            boolean alterou = objetoCategoria.atualizarCategoria(id, nomeCategoria, embalagem, tamanho);
 
             if (alterou) {
 

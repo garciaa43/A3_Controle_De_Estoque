@@ -140,14 +140,14 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuItemMovimentacaoActionPerformed
 
     private void MenuItemCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemCategoriaActionPerformed
-        TelaCategoria tela = new TelaCategoria();
+        TelaCategoria tela = new TelaCategoria(desktopPane);
         desktopPane.add(tela);
 
         tela.setVisible(true);
     }//GEN-LAST:event_MenuItemCategoriaActionPerformed
 
     private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
-        TelaRelatorios tela = new TelaRelatorios();
+        TelaRelatorios tela = new TelaRelatorios(desktopPane);
         desktopPane.add(tela);
 
         tela.setVisible(true);

@@ -21,7 +21,7 @@ public class TelaCategoria extends javax.swing.JInternalFrame {
     private CategoriaBO objeto = new CategoriaBO();
     private JDesktopPane desktopPane;
     
-    public TelaCategoria() {
+    public TelaCategoria(JDesktopPane desktopPane) {
         initComponents();
         
         ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
@@ -154,7 +154,10 @@ public class TelaCategoria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void BtnGerenciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGerenciarActionPerformed
-        // TODO add your handling code here:
+         TelaGerenciaCategoria tela = new TelaGerenciaCategoria();
+        desktopPane.add(tela);
+
+        tela.setVisible(true);
     }//GEN-LAST:event_BtnGerenciarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
