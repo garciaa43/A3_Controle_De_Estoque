@@ -26,4 +26,10 @@ public class CategoriaBO {
         return true;
     }
 
+   public boolean deleteCategoria(int id) {
+
+        dao.deleteCategoriaDAO(id);
+        return true;
+    }
+
 }

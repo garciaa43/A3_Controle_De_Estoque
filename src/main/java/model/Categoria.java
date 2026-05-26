@@ -6,9 +6,16 @@ public class Categoria {
     private String tamanho;
     private String embalegem;
 
-    public Categoria(int id, String nomeCategoria, String tamanho1, String embalagem) {
+    public Categoria() {
     }
 
+    public Categoria(int id,String nome, String tamanho, String embalegem) {
+        this.id_categoria = id;
+        this.nome = nome;
+        this.tamanho = tamanho;
+        this.embalegem = embalegem;
+    }
+    
     public Categoria(String nome, String tamanho, String embalegem) {
         this.nome = nome;
         this.tamanho = tamanho;

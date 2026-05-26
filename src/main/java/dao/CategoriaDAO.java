@@ -13,16 +13,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import model.Categoria;
 
-
 /**
  *
  * @author Marquinhos
  */
 public class CategoriaDAO {
 
-        private ArrayList<Categoria> minhaLista = new ArrayList<>();
-
- 
+    private ArrayList<Categoria> minhaLista = new ArrayList<>();
 
     public Connection getConexao() {
         Connection connection = null; //instância da conexão
@@ -55,8 +52,7 @@ public class CategoriaDAO {
         }
     }
 
-    
-   public boolean insertCategoriaDAO(Categoria objeto) {
+    public boolean insertCategoriaDAO(Categoria objeto) {
 
         String sql = "INSERT INTO Categoria(id_categoria, nome, tamanho, embalagem) VALUES(?,?,?,?)";
         try {
@@ -101,13 +97,11 @@ public class CategoriaDAO {
 
                 String embalagem = res.getString("embalagem");
 
-
                 Categoria objeto = new Categoria(
                         id,
                         nomeCategoria,
                         tamanho,
                         embalagem
-                       
                 );
 
                 minhaLista.add(objeto);
@@ -141,6 +135,15 @@ public class CategoriaDAO {
         }
 
     }
-}
-    
 
+    public boolean deleteCategoriaDAO(int id) {
+        try {
+            Statement stmt = this.getConexao().createStatement();
+            stmt.executeUpdate("DELETE FROM Categoria WHERE id_categoria = " + id);
+            stmt.close();
+        } catch (SQLException erro) {
+            System.out.println("Erro:" + erro);
+        }
+        return true;
+    }
+}

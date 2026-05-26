@@ -5,7 +5,11 @@
 package view;
 
 import bo.CategoriaBO;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
+import model.Categoria;
 
 /**
  *
@@ -20,6 +24,11 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
 
     public TelaGerenciaCategoria() {
         initComponents();
+        
+                ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+
+        setBorder(null);
+        this.carregaTabela();
     }
 
     /**
@@ -33,9 +42,9 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
 
         comboBoxEmbalagem = new javax.swing.JComboBox<>();
         BtnAlterar = new javax.swing.JButton();
-        BtnGerenciar = new javax.swing.JButton();
+        BtnExcluir = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        btnSair = new javax.swing.JButton();
+        BtnVoltar = new javax.swing.JButton();
         TxtNomeCategoria = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -48,13 +57,13 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
         BtnAlterar.setText("Alterar");
         BtnAlterar.addActionListener(this::BtnAlterarActionPerformed);
 
-        BtnGerenciar.setText("Excluir");
-        BtnGerenciar.addActionListener(this::BtnGerenciarActionPerformed);
+        BtnExcluir.setText("Excluir");
+        BtnExcluir.addActionListener(this::BtnExcluirActionPerformed);
 
         jLabel2.setText("Nome da Categoria:");
 
-        btnSair.setText("Sair");
-        btnSair.addActionListener(this::btnSairActionPerformed);
+        BtnVoltar.setText("Voltar");
+        BtnVoltar.addActionListener(this::BtnVoltarActionPerformed);
 
         jLabel3.setText("Tamanho:");
 
@@ -71,7 +80,7 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "ID", "Categoria", "Tamanho", "Lata"
+                "ID", "Categoria", "Tamanho", "Embalagem"
             }
         ));
         jScrollPane1.setViewportView(jTableCategoria);
@@ -89,9 +98,9 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(BtnAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(BtnGerenciar)
+                        .addComponent(BtnExcluir)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSair))
+                        .addComponent(BtnVoltar))
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
                     .addComponent(TxtNomeCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -120,8 +129,8 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
                 .addGap(84, 84, 84)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnAlterar)
-                    .addComponent(BtnGerenciar)
-                    .addComponent(btnSair))
+                    .addComponent(BtnExcluir)
+                    .addComponent(BtnVoltar))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -175,13 +184,48 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_BtnAlterarActionPerformed
 
-    private void BtnGerenciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGerenciarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnGerenciarActionPerformed
+    private void BtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExcluirActionPerformed
+       try {
+            int linha = jTableCategoria.getSelectedRow();
 
-    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+            if (linha == -1) {
+                BtnExcluir.setEnabled(false);
+            } else {
+                int id = Integer.parseInt(jTableCategoria.getValueAt(linha, 0).toString());
+                int repostaUsuario = JOptionPane.showConfirmDialog(
+                        null,
+                        "Tem certeza que deseja apagar essa movimentação??"
+                );
+                if (repostaUsuario == JOptionPane.YES_OPTION) {
+                    boolean apagou = objetoCategoria.deleteCategoria(id);
+
+                    if (apagou) {
+                        JOptionPane.showMessageDialog(
+                                rootPane,
+                                "Categoria apagado com sucesso!"
+                        );
+
+                        limparCampos();
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } finally {
+
+            carregaTabela();
+        }
+    }//GEN-LAST:event_BtnExcluirActionPerformed
+
+    private void BtnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVoltarActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_btnSairActionPerformed
+    }//GEN-LAST:event_BtnVoltarActionPerformed
 
     private void comboBoxTamanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxTamanhoActionPerformed
         // TODO add your handling code here:
@@ -190,9 +234,9 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAlterar;
-    private javax.swing.JButton BtnGerenciar;
+    private javax.swing.JButton BtnExcluir;
+    private javax.swing.JButton BtnVoltar;
     private javax.swing.JTextField TxtNomeCategoria;
-    private javax.swing.JButton btnSair;
     private javax.swing.JComboBox<String> comboBoxEmbalagem;
     private javax.swing.JComboBox<String> comboBoxTamanho;
     private javax.swing.JLabel jLabel2;
@@ -203,11 +247,26 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void carregaTabela() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            DefaultTableModel modelo = (DefaultTableModel) this.jTableCategoria.getModel();
+        modelo.setNumRows(0);
+
+        ArrayList<Categoria> minhaLista = objetoCategoria.listarTodos();
+            System.out.println(minhaLista.size());
+
+        
+        for (Categoria c : minhaLista) {
+            modelo.addRow(new Object[]{
+                c.getId_categoria(),
+                c.getNome(),
+                c.getTamanho(),
+                c.getEmbalegem()
+            });
+        }
     }
 
     private void limparCampos() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        TxtNomeCategoria.setText("");
+        
     }
 
 }
