@@ -5,8 +5,10 @@
 package view;
 
 import bo.ProdutoBO;
+import java.util.ArrayList;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import model.Produto;
 
 public class TelaRelatorios extends javax.swing.JInternalFrame {
 
@@ -111,9 +113,18 @@ public class TelaRelatorios extends javax.swing.JInternalFrame {
         model.addColumn("Preço");
         model.addColumn("Unidade");
         model.addColumn("Categoria");
+        model.setNumRows(0);
+        
 
-        objetoProduto.listarPrecosPorProdutos();
-
+        ArrayList<Produto> minhaLista = objetoProduto.listarPrecosPorProdutos();
+        for (Produto p : minhaLista) {
+            model.addRow(new Object[]{
+                p.getNome(),
+                p.getPreco(),
+                p.getUnidade(),
+                p.getNome_categoria()
+            });
+        }
     }
 
     else if(relatorio.equals("Produtos abaixo do mínimo")) {

@@ -1,12 +1,11 @@
 package dao;
 
-import model.Produto;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import model.Produto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,28 +159,26 @@ public class ProdutoDAO {
         ArrayList<Produto> lista = new ArrayList<>();
 
         String sql = "SELECT "
-                + "    p.nome,"
-                + "    p.preco_unitario,"
-                + "    p.unidade,"
-                + "    c.nome AS categoria"
-                + "FROM produto p"
-                + "INNER JOIN categoria c "
-                + "ON p.id_categoria = c.id_categoria"
-                + "ORDER BY p.nome;";
+                + "p.nome, "
+                + "p.preco_unitario, "
+                + "p.unidade, "
+                + "c.nome AS categoria "
+                + "FROM Produto p "
+                + "INNER JOIN Categoria c "
+                + "ON p.id_categoria = c.id_categoria "
+                + "ORDER BY p.nome";
 
         try (
-                Connection conn = conectar();
-                PreparedStatement stmt = conn.prepareStatement(sql); 
-                ResultSet rs = stmt.executeQuery()) {
+                Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
 
                 Produto produto = new Produto();
 
-                produto.setId(rs.getInt("id"));
                 produto.setNome(rs.getString("nome"));
-                produto.setQuantidade(rs.getInt("quantidade"));
-                produto.setPreco(rs.getDouble("preco"));
+                produto.setPreco(rs.getDouble("preco_unitario"));
+                produto.setUnidade(rs.getString("unidade"));
+                produto.setNome_categoria(rs.getString("categoria"));
 
                 lista.add(produto);
             }

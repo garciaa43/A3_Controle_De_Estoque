@@ -1,15 +1,17 @@
-package com.mycompany.exercicio20;
+package model;
 
 public class Produto {
 
     private int id;
     private int id_categoria;
+    private String nome_categoria;
     private String nome;
     private int quantidade;
+    private String unidade;
     private double preco;
     private int qntdMin;
     private int qntdMax;
-
+   
     public Produto() {
     }
 
@@ -18,6 +20,18 @@ public class Produto {
         this.id_categoria = id_categoria;
         this.nome = nome;
         this.quantidade = quantidade;
+        this.preco = preco;
+        this.qntdMin = qntdMin;
+        this.qntdMax = qntdMax;
+    }
+    
+    public Produto(int id, int id_categoria, String nome_categoria, String nome, int quantidade, String unidade, double preco, int qntdMin, int qntdMax) {
+        this.id = id;
+        this.id_categoria = id_categoria;
+        this.nome_categoria = nome_categoria;
+        this.nome = nome;
+        this.quantidade = quantidade;
+        this.unidade = unidade;
         this.preco = preco;
         this.qntdMin = qntdMin;
         this.qntdMax = qntdMax;
@@ -48,8 +62,14 @@ public class Produto {
     public int getQntdMax() {
         return qntdMax;
     }
+      
+    public String getNome_categoria() {
+        return nome_categoria;
+    }
 
-    
+    public String getUnidade() {
+        return unidade;
+    }
 
     public int getId() {
         return id;
@@ -81,5 +101,13 @@ public class Produto {
 
     public void setPreco(double preco) {
         this.preco = preco;
+    }
+    
+     public void setNome_categoria(String nome_categoria) {
+        this.nome_categoria = nome_categoria;
+    }
+
+    public void setUnidade(String unidade) {
+        this.unidade = unidade;
     }
 }

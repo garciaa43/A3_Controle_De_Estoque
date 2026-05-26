@@ -4,8 +4,8 @@ import dao.ProdutoDAO;
 import java.util.ArrayList;
 import model.Produto;
 
+
 import java.util.List;
-import model.Movimentacao;
 
 public class ProdutoBO {
 
