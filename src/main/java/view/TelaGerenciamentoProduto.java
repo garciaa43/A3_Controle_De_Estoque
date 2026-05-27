@@ -22,28 +22,28 @@ public class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        TxtQntdMaxima = new javax.swing.JTextField();
+        JTableProduto = new javax.swing.JTable();
+        TxtQntdMin = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        TxtQntdEstoque = new javax.swing.JTextField();
+        TxtPreco = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        TxtNomeProduto = new javax.swing.JTextField();
+        TxtUnidade = new javax.swing.JTextField();
         TxtCategoria1 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         TxtQntdMaxima2 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        TxtQntdMinima1 = new javax.swing.JTextField();
+        TxtQntdEstoque = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        TxtNomeProduto1 = new javax.swing.JTextField();
+        TxtQntdMax = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         btnCadastrar = new javax.swing.JButton();
         btnCadastrar1 = new javax.swing.JButton();
         btnCadastrar2 = new javax.swing.JButton();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        JTableProduto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -54,9 +54,9 @@ public class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
                 "Nome produto", "Categoria", "Preço", "Quantidade", "Quantidade Maxima", "Quantidade Minima", "Unidade"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(JTableProduto);
 
-        TxtQntdMaxima.addActionListener(this::TxtQntdMaximaActionPerformed);
+        TxtQntdMin.addActionListener(this::TxtQntdMinActionPerformed);
 
         jLabel6.setText("Preço: ");
 
@@ -68,7 +68,7 @@ public class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
 
         jLabel12.setText("Nome do Produto: ");
 
-        TxtQntdMinima1.addActionListener(this::TxtQntdMinima1ActionPerformed);
+        TxtQntdEstoque.addActionListener(this::TxtQntdEstoqueActionPerformed);
 
         jLabel13.setText("Quantidade minima:");
 
@@ -97,20 +97,20 @@ public class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(TxtQntdMaxima, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(TxtQntdMin, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(56, 56, 56)
                                 .addComponent(btnCadastrar1))
-                            .addComponent(TxtNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(TxtUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(btnCadastrar)
                         .addContainerGap(158, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TxtNomeProduto1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TxtQntdMax, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11)
-                            .addComponent(TxtQntdMinima1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10)
                             .addComponent(TxtQntdEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10)
+                            .addComponent(TxtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
                             .addComponent(TxtQntdMaxima2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel15)
@@ -148,20 +148,20 @@ public class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtQntdEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TxtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtQntdMinima1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TxtQntdEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtNomeProduto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TxtQntdMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TxtQntdMaxima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtQntdMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCadastrar1)
                     .addComponent(btnCadastrar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -169,7 +169,7 @@ public class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
                     .addComponent(jLabel14)
                     .addComponent(btnCadastrar2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TxtUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -186,26 +186,26 @@ public class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TxtQntdMaximaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtQntdMaximaActionPerformed
+    private void TxtQntdMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtQntdMinActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TxtQntdMaximaActionPerformed
+    }//GEN-LAST:event_TxtQntdMinActionPerformed
 
     private void TxtQntdMaxima2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtQntdMaxima2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtQntdMaxima2ActionPerformed
 
-    private void TxtQntdMinima1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtQntdMinima1ActionPerformed
+    private void TxtQntdEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtQntdEstoqueActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TxtQntdMinima1ActionPerformed
+    }//GEN-LAST:event_TxtQntdEstoqueActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         try {
-            String nomeProduto = TxtNomeProduto.getText();
-            String categoria = TxtCategoria.getText();
+            String nomeProduto = TxtUnidade.getText();
+            String categoria = TxtCategoria1.getText();
             String preco = TxtPreco.getText();
             String quantidadeEstoque = TxtQntdEstoque.getText();
-            String quantidadeMinima = TxtQntdMinima.getText();
-            String quantidadeMaxima = TxtQntdMaxima.getText();
+            String quantidadeMinima = TxtQntdMin.getText();
+            String quantidadeMaxima = TxtQntdMax.getText();
             String unidade = TxtUnidade.getText();
 
             if (nomeProduto.matches(".*\\d.*")) {
@@ -267,14 +267,14 @@ public class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable JTableProduto;
     private javax.swing.JTextField TxtCategoria1;
-    private javax.swing.JTextField TxtNomeProduto;
-    private javax.swing.JTextField TxtNomeProduto1;
+    private javax.swing.JTextField TxtPreco;
     private javax.swing.JTextField TxtQntdEstoque;
-    private javax.swing.JTextField TxtQntdMaxima;
-    private javax.swing.JTextField TxtQntdMaxima1;
+    private javax.swing.JTextField TxtQntdMax;
     private javax.swing.JTextField TxtQntdMaxima2;
-    private javax.swing.JTextField TxtQntdMinima1;
+    private javax.swing.JTextField TxtQntdMin;
+    private javax.swing.JTextField TxtUnidade;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnCadastrar1;
     private javax.swing.JButton btnCadastrar2;
@@ -288,6 +288,5 @@ public class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
