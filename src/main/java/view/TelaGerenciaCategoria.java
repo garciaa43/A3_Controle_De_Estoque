@@ -83,6 +83,11 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
                 "ID", "Categoria", "Tamanho", "Embalagem"
             }
         ));
+        jTableCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableCategoriaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableCategoria);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -158,7 +163,7 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
                     jTableCategoria.getValueAt(linha, 0).toString()
             );
 
-            boolean alterou = objetoCategoria.atualizarCategoria(id, nomeCategoria, embalagem, tamanho);
+            boolean alterou = objetoCategoria.atualizarCategoria(id, nomeCategoria, tamanho, embalagem );
 
             if (alterou) {
 
@@ -194,7 +199,7 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
                 int id = Integer.parseInt(jTableCategoria.getValueAt(linha, 0).toString());
                 int repostaUsuario = JOptionPane.showConfirmDialog(
                         null,
-                        "Tem certeza que deseja apagar essa movimentação??"
+                        "Tem certeza que deseja apagar essa categoria?"
                 );
                 if (repostaUsuario == JOptionPane.YES_OPTION) {
                     boolean apagou = objetoCategoria.deleteCategoria(id);
@@ -230,6 +235,17 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
     private void comboBoxTamanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxTamanhoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboBoxTamanhoActionPerformed
+
+    private void jTableCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCategoriaMouseClicked
+        if (this.jTableCategoria.getSelectedRow() != -1) {
+            String nomeCategoria = this.jTableCategoria.getValueAt(this.jTableCategoria.getSelectedRow(), 1).toString();
+            String tamanho = this.jTableCategoria.getValueAt(this.jTableCategoria.getSelectedRow(), 2).toString();
+            String emabalagem = this.jTableCategoria.getValueAt(this.jTableCategoria.getSelectedRow(), 3).toString();
+            this.TxtNomeCategoria.setText(nomeCategoria);
+            this.comboBoxTamanho.setSelectedItem(tamanho);
+            this.comboBoxEmbalagem.setSelectedItem(emabalagem);
+        }
+    }//GEN-LAST:event_jTableCategoriaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -119,7 +119,8 @@ public class CategoriaDAO {
     }
 
     public boolean atualizarCategoria(Categoria categoria) {
-        String sql = "UPDATE Categoria set nome = ? ,tamanho = ? ,emabalagem = ? WHERE id_categoria = ?";
+        String sql = "UPDATE Categoria set nome = ? ,tamanho = ? ,embalagem = ? WHERE id_categoria = ?";
+        System.out.println(categoria.getTamanho());
         try {
             PreparedStatement stmt = this.getConexao().prepareStatement(sql);
             stmt.setString(1, categoria.getNome());
