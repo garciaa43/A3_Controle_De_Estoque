@@ -5,11 +5,21 @@
 package view;
 
 import bo.ProdutoBO;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import javax.swing.JDesktopPane;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import model.Produto;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;        // ← Row do POI, não do MySQL!
+import org.apache.poi.ss.usermodel.Sheet;      // ← Sheet do POI ss.usermodel
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class TelaRelatorios extends javax.swing.JInternalFrame {
 
@@ -91,7 +101,85 @@ public class TelaRelatorios extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnGerarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGerarPDFActionPerformed
-        // TODO add your handling code here:
+        try {
+
+        Workbook workbook = new XSSFWorkbook();
+
+        Sheet sheet = workbook.createSheet("Relatório");
+
+        DefaultTableModel model =
+                (DefaultTableModel) jTable1.getModel();
+
+        // CRIAR CABEÇALHO
+        Row headerRow = sheet.createRow(0);
+
+        for (int i = 0; i < model.getColumnCount(); i++) {
+
+            Cell cell = headerRow.createCell(i);
+
+            cell.setCellValue(model.getColumnName(i));
+        }
+
+        // PREENCHER DADOS
+        for (int i = 0; i < model.getRowCount(); i++) {
+
+            Row row = sheet.createRow(i + 1);
+
+            for (int j = 0; j < model.getColumnCount(); j++) {
+
+                Cell cell = row.createCell(j);
+
+                Object valor = model.getValueAt(i, j);
+
+                if (valor != null) {
+
+                    cell.setCellValue(valor.toString());
+                }
+            }
+        }
+
+        // AJUSTAR TAMANHO DAS COLUNAS
+        for (int i = 0; i < model.getColumnCount(); i++) {
+
+            sheet.autoSizeColumn(i);
+        }
+
+        JFileChooser fileChooser = new JFileChooser();
+
+        fileChooser.setSelectedFile(
+                new java.io.File("relatorio.xlsx")
+        );
+
+        int opcao = fileChooser.showSaveDialog(this);
+
+        if (opcao == JFileChooser.APPROVE_OPTION) {
+
+            FileOutputStream arquivo =
+                    new FileOutputStream(
+                            fileChooser.getSelectedFile()
+                    );
+
+            workbook.write(arquivo);
+
+            arquivo.close();
+
+            workbook.close();
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Excel gerado com sucesso!"
+            );
+        }
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Erro ao gerar Excel!"
+        );
+    }
     }//GEN-LAST:event_BtnGerarPDFActionPerformed
 
     private void CbRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CbRelatoriosActionPerformed
@@ -149,6 +237,7 @@ public class TelaRelatorios extends javax.swing.JInternalFrame {
     jTable1.setModel(model);
 
 }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnGerarPDF;
