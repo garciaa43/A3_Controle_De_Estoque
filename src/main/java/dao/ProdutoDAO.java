@@ -169,7 +169,9 @@ public class ProdutoDAO {
                 + "ORDER BY p.nome";
 
         try (
-                Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+                Connection conn = conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql); 
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
 
@@ -191,4 +193,48 @@ public class ProdutoDAO {
 
         return lista;
     }
+
+    
+    public ArrayList<Produto> listarProdutosAbaixoMinimo() {
+
+    ArrayList<Produto> lista = new ArrayList<>();
+
+    String sql = "SELECT "
+            + "nome, "
+            + "qntd_min_estoque, "
+            + "qntd_estoque "
+            + "FROM Produto "
+            + "WHERE qntd_estoque < qntd_min_estoque "
+            + "ORDER BY nome";
+
+    try (
+            Connection conn = conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()) {
+
+        while (rs.next()) {
+
+            Produto produto = new Produto();
+
+            produto.setNome(rs.getString("nome"));
+            produto.setQntdMin(rs.getInt("qntd_min_estoque"));
+
+            produto.setQuantidade(rs.getInt("qntd_estoque"));
+
+            lista.add(produto);
+        }
+
+    } catch (SQLException e) {
+
+        System.out.println(
+                "Erro ao listar produtos abaixo do mínimo"
+        );
+
+        e.printStackTrace();
+    }
+
+    return lista;
 }
+    
+    
+    }

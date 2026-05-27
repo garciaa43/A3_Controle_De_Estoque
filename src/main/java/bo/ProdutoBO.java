@@ -51,4 +51,9 @@ public class ProdutoBO {
 
         return dao.listarPrecosPorProdutos();
     }
+
+    public ArrayList<Produto> listarProdutosAbaixoMinimo() {
+        
+        return dao.listarProdutosAbaixoMinimo();
+    }
 }

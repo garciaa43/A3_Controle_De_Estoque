@@ -133,8 +133,16 @@ public class TelaRelatorios extends javax.swing.JInternalFrame {
         model.addColumn("Produto");
         model.addColumn("Qtd Mínima");
         model.addColumn("Qtd Estoque");
+        model.setNumRows(0);
 
-        
+         ArrayList<Produto> minhaLista = objetoProduto.listarProdutosAbaixoMinimo();
+        for (Produto p : minhaLista) {
+            model.addRow(new Object[]{
+                p.getNome(),
+                p.getQntdMin(),
+                p.getQuantidade()
+            });
+        }
 
     }
 
