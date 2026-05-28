@@ -9,6 +9,19 @@
             <Property name="text" type="java.lang.String" value="Telas"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="MenuItemCategoria">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Categoria"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuItemCategoriaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="MenuItemProduto">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Produto"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="MenuItemMovimentacao">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Movimenta&#xe7;&#xe3;o"/>
@@ -17,17 +30,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuItemMovimentacaoActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="MenuItemProduto">
+            <MenuItem class="javax.swing.JMenuItem" name="JMenuReajusteDePreco">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Produto"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="MenuItemCategoria">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Categoria"/>
+                <Property name="text" type="java.lang.String" value="Reajuste de pre&#xe7;o"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuItemCategoriaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JMenuReajusteDePrecoActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem1">

@@ -28,7 +28,14 @@ public class MovimentacaoBO {
             novoEstoque = estoqueAtual + qntdMovimentada;
         } else {
             novoEstoque = estoqueAtual - qntdMovimentada;
+        
+        if (novoEstoque < 0) {
+            this.ultimoAlertaEstoque = "ESTOQUE_NEGATIVO";
+            return false;
         }
+        }
+        
+        
 
         produtoDAO.atualizarQuantidadeEstoque(idProduto, novoEstoque);
 

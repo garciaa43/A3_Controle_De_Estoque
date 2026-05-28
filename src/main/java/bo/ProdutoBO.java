@@ -4,7 +4,6 @@ import dao.ProdutoDAO;
 import java.util.ArrayList;
 import model.Produto;
 
-
 import java.util.List;
 
 public class ProdutoBO {
@@ -53,11 +52,23 @@ public class ProdutoBO {
     }
 
     public ArrayList<Produto> listarProdutosAbaixoMinimo() {
-        
+
         return dao.listarProdutosAbaixoMinimo();
     }
 
     public ArrayList<String> listarNomesProdutos() {
         return dao.listarNomesProdutos();
+    }
+
+    public int buscarIdPorNome(String nome) {
+        return dao.procurarIdPorNome(nome);
+    }
+
+    public boolean reajustarPrecoTodos(double porcentagem) {
+        return dao.reajustarPrecoTodos(porcentagem);
+    }
+
+    public boolean reajustarPrecoPorId(int idProduto, double porcentagem) {
+        return dao.reajustarPrecoPorId(idProduto, porcentagem);
     }
 }

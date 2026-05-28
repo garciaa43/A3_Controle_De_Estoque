@@ -4,6 +4,9 @@
  */
 package view;
 
+import bo.ProdutoBO;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author User
@@ -36,9 +39,10 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuTelas = new javax.swing.JMenu();
-        MenuItemMovimentacao = new javax.swing.JMenuItem();
-        MenuItemProduto = new javax.swing.JMenuItem();
         MenuItemCategoria = new javax.swing.JMenuItem();
+        MenuItemProduto = new javax.swing.JMenuItem();
+        MenuItemMovimentacao = new javax.swing.JMenuItem();
+        JMenuReajusteDePreco = new javax.swing.JMenuItem();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         Fechar = new javax.swing.JMenu();
 
@@ -81,16 +85,20 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
 
         MenuTelas.setText("Telas");
 
-        MenuItemMovimentacao.setText("Movimentação");
-        MenuItemMovimentacao.addActionListener(this::MenuItemMovimentacaoActionPerformed);
-        MenuTelas.add(MenuItemMovimentacao);
+        MenuItemCategoria.setText("Categoria");
+        MenuItemCategoria.addActionListener(this::MenuItemCategoriaActionPerformed);
+        MenuTelas.add(MenuItemCategoria);
 
         MenuItemProduto.setText("Produto");
         MenuTelas.add(MenuItemProduto);
 
-        MenuItemCategoria.setText("Categoria");
-        MenuItemCategoria.addActionListener(this::MenuItemCategoriaActionPerformed);
-        MenuTelas.add(MenuItemCategoria);
+        MenuItemMovimentacao.setText("Movimentação");
+        MenuItemMovimentacao.addActionListener(this::MenuItemMovimentacaoActionPerformed);
+        MenuTelas.add(MenuItemMovimentacao);
+
+        JMenuReajusteDePreco.setText("Reajuste de preço");
+        JMenuReajusteDePreco.addActionListener(this::JMenuReajusteDePrecoActionPerformed);
+        MenuTelas.add(JMenuReajusteDePreco);
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("Relatorios");
@@ -153,6 +161,52 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
         tela.setVisible(true);
     }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
 
+    private void JMenuReajusteDePrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuReajusteDePrecoActionPerformed
+        String[] opcoes = {"Todos os Produtos", "Produto Específico"};
+
+        int escolha = JOptionPane.showOptionDialog(
+                null,
+                "Deseja reajustar o preço de qual produto?",
+                "Reajuste de Preço",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcoes,
+                opcoes[0]
+        );
+
+        if (escolha == 0) {
+            // Todos os produtos
+            String input = JOptionPane.showInputDialog(
+                    null,
+                    "Digite a porcentagem de reajuste (ex: 10 para +10%, -5 para -5%):",
+                    "Reajuste Geral",
+                    JOptionPane.PLAIN_MESSAGE
+            );
+
+            if (input != null && !input.trim().isEmpty()) {
+                try {
+                    double porcentagem = Double.parseDouble(input.replace(",", "."));
+                    ProdutoBO produtoBO = new ProdutoBO();
+                    boolean ok = produtoBO.reajustarPrecoTodos(porcentagem);
+
+                    if (ok) {
+                        JOptionPane.showMessageDialog(null, "Preços reajustados com sucesso!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro ao reajustar preços.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Porcentagem inválida.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+        } else if (escolha == 1) {
+            // Produto específico — abre o InternalFrame
+            TelaReajustePreco tela = new TelaReajustePreco(desktopPane);
+            desktopPane.add(tela);
+            tela.setVisible(true);
+        }    }//GEN-LAST:event_JMenuReajusteDePrecoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -180,6 +234,7 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Fechar;
+    private javax.swing.JMenuItem JMenuReajusteDePreco;
     private javax.swing.JMenuItem MenuItemCategoria;
     private javax.swing.JMenuItem MenuItemMovimentacao;
     private javax.swing.JMenuItem MenuItemProduto;

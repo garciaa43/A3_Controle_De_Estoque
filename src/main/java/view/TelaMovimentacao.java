@@ -144,60 +144,80 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         try {
-            String nomeProduto = comboBoxProdutos.getSelectedItem().toString();
-            String data = TxtDataMovimentacao.getText();
-            String qntdMovimentada = TxtQntdMovimentada.getText();
-            String tipoMovimentacao = comboBoxTipodeMovimentacao.getSelectedItem().toString();
+        String nomeProduto = comboBoxProdutos.getSelectedItem().toString();
+        String data = TxtDataMovimentacao.getText();
+        String qntdMovimentada = TxtQntdMovimentada.getText();
+        String tipoMovimentacao = comboBoxTipodeMovimentacao.getSelectedItem().toString();
 
-            if (nomeProduto.isEmpty() || data.isEmpty() || qntdMovimentada.isEmpty() || tipoMovimentacao.isEmpty()) {
-                throw new Mensagem("Todos os campos devem ser preenchidos.");
-            }
-
-            if (!qntdMovimentada.matches("\\d+")) {
-                throw new Mensagem("A quantidade deve conter apenas números.");
-            }
-
-            int quantidade = Integer.parseInt(qntdMovimentada);
-
-            boolean cadastrou = objMovimentacao.insertMovimentacao(
-                    nomeProduto,
-                    data,
-                    quantidade,
-                    tipoMovimentacao
-            );
-
-            if (cadastrou) {
-                JOptionPane.showMessageDialog(null, "Movimentação cadastrada com sucesso!");
-
-                String alerta = objMovimentacao.getUltimoAlertaEstoque();
-
-                if ("ABAIXO_MINIMO".equals(alerta)) {
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Atenção: o estoque do produto ficou ABAIXO do mínimo!",
-                            "Alerta de Estoque",
-                            JOptionPane.WARNING_MESSAGE
-                    );
-                } else if ("ACIMA_MAXIMO".equals(alerta)) {
-                    JOptionPane.showMessageDialog(
-                            null,
-                            "Atenção: o estoque do produto ficou ACIMA do máximo!",
-                            "Alerta de Estoque",
-                            JOptionPane.WARNING_MESSAGE
-                    );
-                }
-
-                limparCampos();
-            }
-
-        } catch (Mensagem e) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    e.getMessage(),
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE
-            );
+        if (nomeProduto.isEmpty() || data.isEmpty() || qntdMovimentada.isEmpty() || tipoMovimentacao.isEmpty()) {
+            throw new Mensagem("Todos os campos devem ser preenchidos.");
         }
+
+        if (!qntdMovimentada.matches("\\d+")) {
+            throw new Mensagem("A quantidade deve conter apenas números.");
+        }
+
+        int quantidade = Integer.parseInt(qntdMovimentada);
+
+        boolean cadastrou = objMovimentacao.insertMovimentacao(
+                nomeProduto,
+                data,
+                quantidade,
+                tipoMovimentacao
+        );
+
+        if (cadastrou) {
+            JOptionPane.showMessageDialog(null, "Movimentação cadastrada com sucesso!");
+
+            String alerta = objMovimentacao.getUltimoAlertaEstoque();
+
+            if ("ABAIXO_MINIMO".equals(alerta)) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Atenção: o estoque do produto ficou ABAIXO do mínimo!",
+                        "Alerta de Estoque",
+                        JOptionPane.WARNING_MESSAGE
+                );
+            } else if ("ACIMA_MAXIMO".equals(alerta)) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Atenção: o estoque do produto ficou ACIMA do máximo!",
+                        "Alerta de Estoque",
+                        JOptionPane.WARNING_MESSAGE
+                );
+            }
+
+            limparCampos();
+
+        } else {
+            // Cadastro bloqueado — verifica o motivo
+            String alerta = objMovimentacao.getUltimoAlertaEstoque();
+
+            if ("ESTOQUE_NEGATIVO".equals(alerta)) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Operação cancelada: a quantidade de saída é maior do que o estoque disponível!",
+                        "Estoque Insuficiente",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            } else {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Erro ao cadastrar movimentação.",
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+
+    } catch (Mensagem e) {
+        JOptionPane.showMessageDialog(
+                null,
+                e.getMessage(),
+                "Erro",
+                JOptionPane.ERROR_MESSAGE
+        );
+    }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void BtnGerenciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGerenciarActionPerformed
@@ -233,11 +253,7 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
         TxtQntdMovimentada.setText("");
     }
 
-    // private boolean verificarQntdMaxeMin(int qntdMovimentada) {
-    //       if (objMovimentacao.verificarQntdMax(qntdMovimentada)) {
-    //      }
-    //      return true;
-    //  }
+    
     private void carregarProdutos() {
 
         comboBoxProdutos.removeAllItems();

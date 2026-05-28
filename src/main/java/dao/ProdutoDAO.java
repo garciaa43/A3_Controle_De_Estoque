@@ -324,29 +324,59 @@ public class ProdutoDAO {
         return lista;
 
     }
-    
-    
+
     public Produto buscarLimitesPorId(int idProduto) {
-    String sql = "SELECT qntd_min_estoque, qntd_max_estoque FROM Produto WHERE id_produto = ?";
+        String sql = "SELECT qntd_min_estoque, qntd_max_estoque FROM Produto WHERE id_produto = ?";
 
-    try {
-        Connection conn = conectar();
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, idProduto);
-        ResultSet rs = stmt.executeQuery();
+        try {
+            Connection conn = conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idProduto);
+            ResultSet rs = stmt.executeQuery();
 
-        if (rs.next()) {
-            Produto produto = new Produto();
-            produto.setQntdMin(rs.getInt("qntd_min_estoque"));
-            produto.setQntdMax(rs.getInt("qntd_max_estoque"));
-            return produto;
+            if (rs.next()) {
+                Produto produto = new Produto();
+                produto.setQntdMin(rs.getInt("qntd_min_estoque"));
+                produto.setQntdMax(rs.getInt("qntd_max_estoque"));
+                return produto;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-    } catch (Exception e) {
-        e.printStackTrace();
+        return null;
     }
 
-    return null;
-}
+    public boolean reajustarPrecoTodos(double porcentagem) {
+        String sql = "UPDATE Produto SET preco_unitario = preco_unitario * (1 + ? / 100)";
+
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setDouble(1, porcentagem);
+            stmt.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean reajustarPrecoPorId(int idProduto, double porcentagem) {
+        String sql = "UPDATE Produto SET preco_unitario = preco_unitario * (1 + ? / 100) WHERE id_produto = ?";
+
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setDouble(1, porcentagem);
+            stmt.setInt(2, idProduto);
+            stmt.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }
