@@ -1,4 +1,3 @@
-
 package view;
 
 import bo.ProdutoBO;
@@ -8,14 +7,11 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import model.Produto;
 
-
 public class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
 
-   
     public TelaGerenciamentoProduto() {
         initComponents();
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -236,26 +232,120 @@ public class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
             int qntdMax = Integer.parseInt(quantidadeMaxima);
 
             if (nomeProduto.isEmpty() || categoria.isEmpty() || preco.isEmpty() || quantidadeEstoque.isEmpty() || quantidadeMinima.isEmpty()
-                || quantidadeMaxima.isEmpty() || unidade.isEmpty()) {
+                    || quantidadeMaxima.isEmpty() || unidade.isEmpty()) {
                 throw new Mensagem("Todos os campos devem ser preenchidos.");
             }
 
             //     boolean cadastrou = objMovimentacao.insertMovimentacao(
-                //           nomeProduto,
-                //         datx,
-                //       quantidade,
-                //     tipoMovimentacao
-                // );
-
+            //           nomeProduto,
+            //         datx,
+            //       quantidade,
+            //     tipoMovimentacao
+            // );
         } catch (Mensagem e) {
             JOptionPane.showMessageDialog(
-                null,
-                e.getMessage(),
-                "Erro",
-                JOptionPane.ERROR_MESSAGE
+                    null,
+                    e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
             );
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            int linha = jTableProduto.getSelectedRow();
+
+            if (linha == -1) {
+                btnExcluir.setEnabled(false);
+            } else {
+                int id = Integer.parseInt(jTableProduto.getValueAt(linha, 0).toString());
+                int repostaUsuario = JOptionPane.showConfirmDialog(
+                        null,
+                        "Tem certeza que deseja apagar essa Produto??"
+                );
+                if (repostaUsuario == JOptionPane.YES_OPTION) {
+                    boolean apagou = objProduto.deleteMovimentacaoBO(id);
+
+                    if (apagou) {
+                        JOptionPane.showMessageDialog(
+                                rootPane,
+                                "Produto apagado com sucesso!"
+                        );
+
+                        limparCampos();
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } finally {
+
+            carregaTabela();
+        }
+    }
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            int linha = jTableProduto.getSelectedRow();
+
+            if (linha == -1) {
+                throw new Mensagem(
+                        "Selecione um aluno para alterar."
+                );
+            }
+            String nomeProduto = TxtNomeProduto.getText();
+            String data = TxtDataMovimentacao.getText();
+            String qntdMovimentada = TxtQntdMovimentada.getText();
+            String tipoMovimentacao = comboBoxTipodeMovimentacao.getSelectedItem().toString();
+
+            if (nomeProduto.matches(".*\\d.*")) {
+                throw new Mensagem("O nome do produto não pode conter números.");
+            }
+
+            if (data.isEmpty()) {
+                throw new Mensagem("Informe uma data.");
+            }
+
+            if (!qntdMovimentada.matches("\\d+")) {
+                throw new Mensagem("A quantidade deve conter apenas números.");
+            }
+
+            int id = Integer.parseInt(
+                    jTableProduto.getValueAt(linha, 0).toString()
+            );
+
+            int quantidade = Integer.parseInt(qntdMovimentada);
+
+            boolean alterou = objProduto.atualizarProduto(id, nomeProduto, categoria, preco, quantidade,  );
+
+            if (alterou) {
+
+                JOptionPane.showMessageDialog(
+                        rootPane,
+                        "Produto alterada com sucesso!"
+                );
+
+                carregaTabela();
+                limparCampos();
+            }
+
+        } catch (Mensagem e) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
 
     private void btnCadastrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrar1ActionPerformed
         // TODO add your handling code here:
