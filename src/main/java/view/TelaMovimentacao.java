@@ -5,6 +5,7 @@
 package view;
 
 import bo.MovimentacaoBO;
+import bo.ProdutoBO;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -18,6 +19,7 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
 
     private MovimentacaoBO objMovimentacao = new MovimentacaoBO();
     private JDesktopPane desktopPane;
+    private ProdutoBO objProduto = new ProdutoBO();
 
     public TelaMovimentacao(JDesktopPane desktopPane) {
         initComponents();
@@ -26,6 +28,9 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
 
         setBorder(null);
         this.desktopPane = desktopPane;
+
+        carregarProdutos();
+
     }
 
     /**
@@ -39,7 +44,6 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        TxtNomeProduto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         TxtDataMovimentacao = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -50,6 +54,7 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
         btnCadastrar = new javax.swing.JButton();
         BtnGerenciar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        comboBoxProdutos = new javax.swing.JComboBox<>();
 
         jLabel1.setText("jLabel1");
 
@@ -74,6 +79,8 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
         btnSair.setText("Sair");
         btnSair.addActionListener(this::btnSairActionPerformed);
 
+        comboBoxProdutos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,14 +97,15 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnSair))
                     .addComponent(jLabel2)
-                    .addComponent(TxtNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(TxtDataMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(TxtQntdMovimentada, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(comboBoxTipodeMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(224, Short.MAX_VALUE))
+                    .addComponent(comboBoxTipodeMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(comboBoxProdutos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(TxtDataMovimentacao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)))
+                .addContainerGap(354, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,7 +118,7 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
                         .addGap(73, 73, 73)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TxtNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboBoxProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -128,7 +136,7 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
                             .addComponent(btnCadastrar)
                             .addComponent(BtnGerenciar)
                             .addComponent(btnSair))))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(172, Short.MAX_VALUE))
         );
 
         pack();
@@ -136,17 +144,13 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         try {
-            String nomeProduto = TxtNomeProduto.getText();
+            String nomeProduto = comboBoxProdutos.getSelectedItem().toString();
             String data = TxtDataMovimentacao.getText();
             String qntdMovimentada = TxtQntdMovimentada.getText();
             String tipoMovimentacao = comboBoxTipodeMovimentacao.getSelectedItem().toString();
 
             if (nomeProduto.isEmpty() || data.isEmpty() || qntdMovimentada.isEmpty() || tipoMovimentacao.isEmpty()) {
                 throw new Mensagem("Todos os campos devem ser preenchidos.");
-            }
-
-            if (nomeProduto.matches(".*\\d.*")) {
-                throw new Mensagem("O nome do produto não pode conter números.");
             }
 
             if (!qntdMovimentada.matches("\\d+")) {
@@ -163,11 +167,25 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
             );
 
             if (cadastrou) {
+                JOptionPane.showMessageDialog(null, "Movimentação cadastrada com sucesso!");
 
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Aluno cadastrado com sucesso!"
-                );
+                String alerta = objMovimentacao.getUltimoAlertaEstoque();
+
+                if ("ABAIXO_MINIMO".equals(alerta)) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Atenção: o estoque do produto ficou ABAIXO do mínimo!",
+                            "Alerta de Estoque",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                } else if ("ACIMA_MAXIMO".equals(alerta)) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Atenção: o estoque do produto ficou ACIMA do máximo!",
+                            "Alerta de Estoque",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                }
 
                 limparCampos();
             }
@@ -197,10 +215,10 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnGerenciar;
     private javax.swing.JTextField TxtDataMovimentacao;
-    private javax.swing.JTextField TxtNomeProduto;
     private javax.swing.JTextField TxtQntdMovimentada;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnSair;
+    private javax.swing.JComboBox<String> comboBoxProdutos;
     private javax.swing.JComboBox<String> comboBoxTipodeMovimentacao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -211,8 +229,24 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void limparCampos() {
-        TxtNomeProduto.setText("");
         TxtDataMovimentacao.setText("");
         TxtQntdMovimentada.setText("");
     }
+
+    // private boolean verificarQntdMaxeMin(int qntdMovimentada) {
+    //       if (objMovimentacao.verificarQntdMax(qntdMovimentada)) {
+    //      }
+    //      return true;
+    //  }
+    private void carregarProdutos() {
+
+        comboBoxProdutos.removeAllItems();
+
+        for (String produto : objProduto.listarNomesProdutos()) {
+
+            comboBoxProdutos.addItem(produto);
+
+        }
+    }
+
 }

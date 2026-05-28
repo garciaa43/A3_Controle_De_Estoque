@@ -169,9 +169,7 @@ public class ProdutoDAO {
                 + "ORDER BY p.nome";
 
         try (
-                Connection conn = conectar();
-                PreparedStatement stmt = conn.prepareStatement(sql); 
-                ResultSet rs = stmt.executeQuery()) {
+                Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
 
@@ -194,47 +192,161 @@ public class ProdutoDAO {
         return lista;
     }
 
-    
     public ArrayList<Produto> listarProdutosAbaixoMinimo() {
 
-    ArrayList<Produto> lista = new ArrayList<>();
+        ArrayList<Produto> lista = new ArrayList<>();
 
-    String sql = "SELECT "
-            + "nome, "
-            + "qntd_min_estoque, "
-            + "qntd_estoque "
-            + "FROM Produto "
-            + "WHERE qntd_estoque < qntd_min_estoque "
-            + "ORDER BY nome";
+        String sql = "SELECT "
+                + "nome, "
+                + "qntd_min_estoque, "
+                + "qntd_estoque "
+                + "FROM Produto "
+                + "WHERE qntd_estoque < qntd_min_estoque "
+                + "ORDER BY nome";
 
-    try (
-            Connection conn = conectar();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) {
+        try (
+                Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
-        while (rs.next()) {
+            while (rs.next()) {
 
-            Produto produto = new Produto();
+                Produto produto = new Produto();
 
-            produto.setNome(rs.getString("nome"));
-            produto.setQntdMin(rs.getInt("qntd_min_estoque"));
+                produto.setNome(rs.getString("nome"));
+                produto.setQntdMin(rs.getInt("qntd_min_estoque"));
 
-            produto.setQuantidade(rs.getInt("qntd_estoque"));
+                produto.setQuantidade(rs.getInt("qntd_estoque"));
 
-            lista.add(produto);
+                lista.add(produto);
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println(
+                    "Erro ao listar produtos abaixo do mínimo"
+            );
+
+            e.printStackTrace();
         }
 
-    } catch (SQLException e) {
+        return lista;
+    }
 
-        System.out.println(
-                "Erro ao listar produtos abaixo do mínimo"
-        );
+    public boolean atualizarQuantidadeEstoque(
+            int idProduto,
+            int novaQuantidade
+    ) {
 
+        String sql
+                = "UPDATE Produto SET qntd_estoque = ? "
+                + "WHERE id_produto = ?";
+
+        try {
+
+            Connection conn = conectar();
+
+            PreparedStatement stmt
+                    = conn.prepareStatement(sql);
+
+            stmt.setInt(1, novaQuantidade);
+            stmt.setInt(2, idProduto);
+
+            stmt.executeUpdate();
+
+            stmt.close();
+            conn.close();
+
+            return true;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public int buscarQuantidadeEstoque(int idProduto) {
+        String sql
+                = "SELECT qntd_estoque FROM Produto WHERE id_produto = ?";
+
+        try {
+
+            Connection conn = conectar();
+
+            PreparedStatement stmt
+                    = conn.prepareStatement(sql);
+
+            stmt.setInt(1, idProduto);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+
+                return rs.getInt("qntd_estoque");
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    public ArrayList<String> listarNomesProdutos() {
+        ArrayList<String> lista = new ArrayList<>();
+
+        String sql = "SELECT nome FROM produto ORDER BY nome";
+
+        try {
+
+            Connection conn = conectar();
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                lista.add(rs.getString("nome"));
+
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+        return lista;
+
+    }
+    
+    
+    public Produto buscarLimitesPorId(int idProduto) {
+    String sql = "SELECT qntd_min_estoque, qntd_max_estoque FROM Produto WHERE id_produto = ?";
+
+    try {
+        Connection conn = conectar();
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, idProduto);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            Produto produto = new Produto();
+            produto.setQntdMin(rs.getInt("qntd_min_estoque"));
+            produto.setQntdMax(rs.getInt("qntd_max_estoque"));
+            return produto;
+        }
+
+    } catch (Exception e) {
         e.printStackTrace();
     }
 
-    return lista;
+    return null;
 }
-    
-    
-    }
+
+}
