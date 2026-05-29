@@ -58,7 +58,10 @@ public class ProdutoDAO {
 
         List<Produto> lista = new ArrayList<>();
 
-        String sql = "SELECT * FROM produto";
+        String sql = "SELECT p.id_produto, p.nome, p.preco_unitario, p.unidade, p.qntd_estoque, p.qntd_min_estoque, p.qntd_max_estoque, c.nome "
+                    + "FROM Produto p "
+                    + "INNER JOIN Categoria c "
+                    + "ON p.id_produto = p.id_produto";
 
         try (
                 Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
@@ -67,10 +70,15 @@ public class ProdutoDAO {
 
                 Produto produto = new Produto();
 
-                produto.setId(rs.getInt("id"));
+                produto.setId(rs.getInt("id_produto"));
                 produto.setNome(rs.getString("nome"));
-                produto.setQuantidade(rs.getInt("quantidade"));
-                produto.setPreco(rs.getDouble("preco"));
+                produto.setPreco(rs.getDouble("preco_unitario"));
+                produto.setUnidade(rs.getString("unidade"));
+                produto.setQuantidade(rs.getInt("qntd_estoque"));
+                produto.setQntdMin(rs.getInt("qntd_min_estoque"));
+                produto.setQntdMax(rs.getInt("qntd_max_estoque"));
+                produto.setNome_categoria(rs.getString("nome"));
+                
 
                 lista.add(produto);
             }

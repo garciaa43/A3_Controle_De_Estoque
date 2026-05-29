@@ -90,6 +90,7 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
         MenuTelas.add(MenuItemCategoria);
 
         MenuItemProduto.setText("Produto");
+        MenuItemProduto.addActionListener(this::MenuItemProdutoActionPerformed);
         MenuTelas.add(MenuItemProduto);
 
         MenuItemMovimentacao.setText("Movimentação");
@@ -176,7 +177,7 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
         );
 
         if (escolha == 0) {
-            // Todos os produtos
+            
             String input = JOptionPane.showInputDialog(
                     null,
                     "Digite a porcentagem de reajuste (ex: 10 para +10%, -5 para -5%):",
@@ -201,11 +202,18 @@ public class TelaMenuPrincipal extends javax.swing.JFrame {
             }
 
         } else if (escolha == 1) {
-            // Produto específico — abre o InternalFrame
+            
             TelaReajustePreco tela = new TelaReajustePreco(desktopPane);
             desktopPane.add(tela);
             tela.setVisible(true);
         }    }//GEN-LAST:event_JMenuReajusteDePrecoActionPerformed
+
+    private void MenuItemProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemProdutoActionPerformed
+        TelaProduto tela = new TelaProduto(desktopPane);
+        desktopPane.add(tela);
+
+        tela.setVisible(true);
+    }//GEN-LAST:event_MenuItemProdutoActionPerformed
 
     /**
      * @param args the command line arguments

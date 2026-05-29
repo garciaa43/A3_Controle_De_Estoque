@@ -17,10 +17,6 @@ public class MovimentacaoBO {
     public boolean insertMovimentacao(String nomeProduto, String data, int qntdMovimentada, String tipoMovimentacao) {
 
         int idProduto = produtoDAO.procurarIdPorNome(nomeProduto);
-
-        Movimentacao objeto = new Movimentacao(idProduto, data, qntdMovimentada, tipoMovimentacao);
-        dao.insertMovimentacao(objeto);
-
         int estoqueAtual = produtoDAO.buscarQuantidadeEstoque(idProduto);
         int novoEstoque;
 
@@ -28,18 +24,16 @@ public class MovimentacaoBO {
             novoEstoque = estoqueAtual + qntdMovimentada;
         } else {
             novoEstoque = estoqueAtual - qntdMovimentada;
-        
-        if (novoEstoque < 0) {
-            this.ultimoAlertaEstoque = "ESTOQUE_NEGATIVO";
-            return false;
-        }
-        }
-        
-        
 
+            if (novoEstoque < 0) {
+                this.ultimoAlertaEstoque = "ESTOQUE_NEGATIVO";
+                return false;
+            }
+        }
+        Movimentacao objeto = new Movimentacao(idProduto, data, qntdMovimentada, tipoMovimentacao);
+        dao.insertMovimentacao(objeto);
         produtoDAO.atualizarQuantidadeEstoque(idProduto, novoEstoque);
 
-        
         this.ultimoAlertaEstoque = verificarQntdMaxeMin(idProduto, novoEstoque);
 
         return true;
