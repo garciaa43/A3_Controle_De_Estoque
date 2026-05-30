@@ -4,10 +4,12 @@
  */
 package view;
 
+import bo.CategoriaBO;
 import bo.ProdutoBO;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import model.Categoria;
 
 /**
  *
@@ -17,6 +19,8 @@ public class TelaProduto extends javax.swing.JInternalFrame {
 
     private ProdutoBO objetoProdutoBO = new ProdutoBO();
     private JDesktopPane desktopPane;
+    private CategoriaBO objCategoria = new CategoriaBO();
+    
 
     public TelaProduto(JDesktopPane desktopPane) {
         initComponents();
@@ -25,6 +29,8 @@ public class TelaProduto extends javax.swing.JInternalFrame {
 
         setBorder(null);
         this.desktopPane = desktopPane;
+        this.carregarCategorias();
+        
     }
 
     /**
@@ -42,7 +48,6 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         btnSair = new javax.swing.JButton();
         TxtNomeProduto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        TxtCategoria = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         TxtPreco = new javax.swing.JTextField();
         TxtQntdMaxima = new javax.swing.JTextField();
@@ -53,6 +58,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         TxtUnidade = new javax.swing.JTextField();
+        jComboBoxCategoria = new javax.swing.JComboBox<>();
 
         btnCadastrar.setText("Cadastrar");
         btnCadastrar.addActionListener(this::btnCadastrarActionPerformed);
@@ -90,6 +96,9 @@ public class TelaProduto extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(238, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(TxtNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
                     .addComponent(jLabel8)
                     .addComponent(TxtQntdEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
@@ -111,14 +120,9 @@ public class TelaProduto extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSair)
                                 .addGap(49, 49, 49))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(TxtNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(TxtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TxtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(203, 203, 203)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(TxtPreco, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)))
                 .addGap(123, 123, 123))
         );
         layout.setVerticalGroup(
@@ -130,9 +134,9 @@ public class TelaProduto extends javax.swing.JInternalFrame {
                 .addComponent(TxtNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
+                .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TxtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -170,7 +174,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         try {
             String nomeProduto = TxtNomeProduto.getText();
-            String categoria = TxtCategoria.getText();
+            Categoria categoriaSelecionada = (Categoria) jComboBoxCategoria.getSelectedItem();
             String preco = TxtPreco.getText();
             String quantidadeEstoque = TxtQntdEstoque.getText();
             String quantidadeMinima = TxtQntdMinima.getText();
@@ -179,8 +183,6 @@ public class TelaProduto extends javax.swing.JInternalFrame {
 
             if (nomeProduto.matches(".*\\d.*")) {
                 throw new Mensagem("O nome do produto não pode conter números.");
-            } else if (categoria.matches(".*\\d.*")) {
-                throw new Mensagem("A categoria não pode conter números.");
             } else if (unidade.matches(".*\\d.*")) {
                 throw new Mensagem("A unidade não pode conter números.");
             }
@@ -204,7 +206,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
             int qntdMin = Integer.parseInt(quantidadeMinima);
             int qntdMax = Integer.parseInt(quantidadeMaxima);
 
-            if (nomeProduto.isEmpty() || categoria.isEmpty() || preco.isEmpty() || quantidadeEstoque.isEmpty() || quantidadeMinima.isEmpty()
+            if (nomeProduto.isEmpty() || preco.isEmpty() || quantidadeEstoque.isEmpty() || quantidadeMinima.isEmpty()
                     || quantidadeMaxima.isEmpty() || unidade.isEmpty()) {
                 throw new Mensagem("Todos os campos devem ser preenchidos.");
             }
@@ -248,10 +250,21 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtUnidadeActionPerformed
 
+    
+        private void carregarCategorias() {
+
+        jComboBoxCategoria.removeAllItems();
+
+        for (Categoria categoria : objCategoria.listarTodos()) {
+
+            jComboBoxCategoria.addItem(categoria);
+
+        }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnGerenciar;
-    private javax.swing.JTextField TxtCategoria;
     private javax.swing.JTextField TxtNomeProduto;
     private javax.swing.JTextField TxtPreco;
     private javax.swing.JTextField TxtQntdEstoque;
@@ -260,6 +273,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
     private javax.swing.JTextField TxtUnidade;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnSair;
+    private javax.swing.JComboBox<Categoria> jComboBoxCategoria;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

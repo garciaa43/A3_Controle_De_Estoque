@@ -351,7 +351,7 @@ public final class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
             String qntdMin = this.JTableProduto.getValueAt(this.JTableProduto.getSelectedRow(), 6).toString();
             String unidade = this.JTableProduto.getValueAt(this.JTableProduto.getSelectedRow(), 7).toString();
 
-            this.TxtNomeProduto.setText(nome_produto);
+            this.TxtnomeProduto.setText(nome_produto);
             this.TxtCategoria.setText(categoria);
             this.TxtPreco.setText(preco);
             this.TxtQntdEstoque.setText(estoque);

@@ -147,4 +147,32 @@ public class CategoriaDAO {
         }
         return true;
     }
+
+    public ArrayList<String> listarNomesCategorias() {
+         ArrayList<String> lista = new ArrayList<>();
+
+        try {
+
+            Statement stmt = this.getConexao().createStatement();
+
+            ResultSet res = stmt.executeQuery(
+                    "SELECT nome FROM Categoria ORDER BY nome"
+            );
+
+            while (res.next()) {
+               lista.add(res.getString("nome"));
+
+               
+            }
+
+            res.close();
+            stmt.close();
+
+        } catch (SQLException ex) {
+
+            ex.printStackTrace();
+        }
+
+        return lista;
+    }
 }

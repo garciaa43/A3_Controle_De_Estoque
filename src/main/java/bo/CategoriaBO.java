@@ -32,4 +32,9 @@ public class CategoriaBO {
         return true;
     }
 
+    public ArrayList<String> listarNomesCategorias() {
+
+        return dao.listarNomesCategorias();
+    }
+
 }
