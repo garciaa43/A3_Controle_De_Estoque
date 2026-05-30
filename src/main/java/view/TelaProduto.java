@@ -10,6 +10,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import model.Categoria;
+import model.Produto;
 
 /**
  *
@@ -20,7 +21,6 @@ public class TelaProduto extends javax.swing.JInternalFrame {
     private ProdutoBO objetoProdutoBO = new ProdutoBO();
     private JDesktopPane desktopPane;
     private CategoriaBO objCategoria = new CategoriaBO();
-    
 
     public TelaProduto(JDesktopPane desktopPane) {
         initComponents();
@@ -30,7 +30,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         setBorder(null);
         this.desktopPane = desktopPane;
         this.carregarCategorias();
-        
+
     }
 
     /**
@@ -181,49 +181,46 @@ public class TelaProduto extends javax.swing.JInternalFrame {
             String quantidadeMaxima = TxtQntdMaxima.getText();
             String unidade = TxtUnidade.getText();
 
-            if (nomeProduto.matches(".*\\d.*")) {
-                throw new Mensagem("O nome do produto não pode conter números.");
-            } else if (unidade.matches(".*\\d.*")) {
-                throw new Mensagem("A unidade não pode conter números.");
-            }
-
-            if (!preco.matches("\\d+")) {
-                throw new Mensagem("A quantidade deve conter apenas números.");
-
-            } else if (!quantidadeEstoque.matches("\\d+")) {
-                throw new Mensagem("A quantidade deve conter apenas números.");
-
-            } else if (!quantidadeMinima.matches("\\d+")) {
-                throw new Mensagem("A quantidade minima deve conter apenas números.");
-
-            } else if (!quantidadeMaxima.matches("\\d+")) {
-                throw new Mensagem("A quantidade maxima deve conter apenas números.");
-
-            }
-
-            int preco_produto = Integer.parseInt(preco);
-            int qntdEstoque = Integer.parseInt(quantidadeEstoque);
-            int qntdMin = Integer.parseInt(quantidadeMinima);
-            int qntdMax = Integer.parseInt(quantidadeMaxima);
-
-            if (nomeProduto.isEmpty() || preco.isEmpty() || quantidadeEstoque.isEmpty() || quantidadeMinima.isEmpty()
-                    || quantidadeMaxima.isEmpty() || unidade.isEmpty()) {
+            if (nomeProduto.isEmpty() || preco.isEmpty() || quantidadeEstoque.isEmpty()
+                    || quantidadeMinima.isEmpty() || quantidadeMaxima.isEmpty() || unidade.isEmpty()) {
                 throw new Mensagem("Todos os campos devem ser preenchidos.");
             }
 
-            //     boolean cadastrou = objMovimentacao.insertMovimentacao(
-            //           nomeProduto,
-            //         datx,
-            //       quantidade,
-            //     tipoMovimentacao
-            // );
+            if (nomeProduto.matches(".*\\d.*")) {
+                throw new Mensagem("O nome do produto não pode conter números.");
+            }
+            if (unidade.matches(".*\\d.*")) {
+                throw new Mensagem("A unidade não pode conter números.");
+            }
+            if (!preco.matches("\\d+")) {
+                throw new Mensagem("O preço deve conter apenas números.");
+            }
+            if (!quantidadeEstoque.matches("\\d+")) {
+                throw new Mensagem("A quantidade em estoque deve conter apenas números.");
+            }
+            if (!quantidadeMinima.matches("\\d+")) {
+                throw new Mensagem("A quantidade mínima deve conter apenas números.");
+            }
+            if (!quantidadeMaxima.matches("\\d+")) {
+                throw new Mensagem("A quantidade máxima deve conter apenas números.");
+            }
+
+            Produto produto = new Produto();
+            produto.setNome(nomeProduto);
+            produto.setId_categoria(categoriaSelecionada.getId_categoria());
+            produto.setPreco(Integer.parseInt(preco));
+            produto.setQuantidade(Integer.parseInt(quantidadeEstoque));
+            produto.setQntdMin(Integer.parseInt(quantidadeMinima));
+            produto.setQntdMax(Integer.parseInt(quantidadeMaxima));
+            produto.setUnidade(unidade);
+
+            objetoProdutoBO.cadastrar(produto);
+            JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
+
         } catch (Mensagem e) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    e.getMessage(),
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE
-            );
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
@@ -250,8 +247,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtUnidadeActionPerformed
 
-    
-        private void carregarCategorias() {
+    private void carregarCategorias() {
 
         jComboBoxCategoria.removeAllItems();
 
@@ -261,7 +257,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
 
         }
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnGerenciar;

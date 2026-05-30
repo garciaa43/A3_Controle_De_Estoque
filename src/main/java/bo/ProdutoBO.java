@@ -11,18 +11,18 @@ public class ProdutoBO {
     ProdutoDAO dao = new ProdutoDAO();
 
     // CADASTRAR
-    public void cadastrar(Produto produto) {
-
+    public void cadastrar(Produto produto) throws Exception {
         if (produto.getNome().isEmpty()) {
-
-            System.out.println("Nome obrigatório!");
-            return;
+            throw new Exception("Nome obrigatório!");
         }
-
         if (produto.getPreco() <= 0) {
-
-            System.out.println("Preço inválido!");
-            return;
+            throw new Exception("Preço inválido!");
+        }
+        if (produto.getQntdMin() > produto.getQntdMax()) {
+            throw new Exception("Quantidade mínima não pode ser maior que a máxima!");
+        }
+        if (dao.existePorNome(produto.getNome())) {
+            throw new Exception("Já existe um produto com esse nome!");
         }
 
         dao.cadastrar(produto);

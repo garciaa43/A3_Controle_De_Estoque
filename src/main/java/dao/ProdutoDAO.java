@@ -30,29 +30,49 @@ public class ProdutoDAO {
     }
 
     // CADASTRAR
-    public void cadastrar(Produto produto) {
+   public void cadastrar(Produto produto) {
+    String sql = "INSERT INTO Produto(nome, id_categoria, preco_unitario, qntd_estoque, qntd_min_estoque, qntd_max_estoque, unidade) "
+               + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        String sql
-                = "INSERT INTO produto(nome, quantidade, preco) VALUES (?, ?, ?)";
+    try (Connection conn = conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        try (
-                Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, produto.getNome());
+        stmt.setInt(2, produto.getId_categoria());
+        stmt.setDouble(3, produto.getPreco());
+        stmt.setInt(4, produto.getQuantidade());
+        stmt.setInt(5, produto.getQntdMin());
+        stmt.setInt(6, produto.getQntdMax());
+        stmt.setString(7, produto.getUnidade());
 
-            stmt.setString(1, produto.getNome());
-            stmt.setInt(2, produto.getQuantidade());
-            stmt.setDouble(3, produto.getPreco());
+        stmt.executeUpdate();
 
-            stmt.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 
-            System.out.println("Produto cadastrado!");
+   public boolean existePorNome(String nome) {
+    String sql = "SELECT COUNT(*) FROM Produto WHERE nome = ?";
 
-        } catch (SQLException e) {
+    try (Connection conn = conectar();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            System.out.println("Erro ao cadastrar produto");
-            e.printStackTrace();
+        stmt.setString(1, nome);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            return rs.getInt(1) > 0;
         }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
 
+    return false;
+}
+   
+   
     // LISTAR
     public List<Produto> listar() {
 
