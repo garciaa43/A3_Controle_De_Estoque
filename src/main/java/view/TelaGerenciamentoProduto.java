@@ -8,23 +8,19 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import model.Produto;
 
-public class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
+public final class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
 
     private javax.swing.JTextField TxtNomeProduto;
-    private ProdutoBO objProduto = new ProdutoBO();
+    private final ProdutoBO objProduto = new ProdutoBO();
 
     public TelaGerenciamentoProduto() {
         initComponents();
-        
-        
-        
+
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
 
         setBorder(null);
         this.carregaTabela();
     }
-
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -345,46 +341,64 @@ public class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void JTableProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableProdutoMouseClicked
-        
+
+        if (this.JTableProduto.getSelectedRow() != -1) {
+            String nome_produto = this.JTableProduto.getValueAt(this.JTableProduto.getSelectedRow(), 1).toString();
+            String categoria = this.JTableProduto.getValueAt(this.JTableProduto.getSelectedRow(), 2).toString();
+            String preco = this.JTableProduto.getValueAt(this.JTableProduto.getSelectedRow(), 3).toString();
+            String estoque = this.JTableProduto.getValueAt(this.JTableProduto.getSelectedRow(), 4).toString();
+            String qntdMax = this.JTableProduto.getValueAt(this.JTableProduto.getSelectedRow(), 5).toString();
+            String qntdMin = this.JTableProduto.getValueAt(this.JTableProduto.getSelectedRow(), 6).toString();
+            String unidade = this.JTableProduto.getValueAt(this.JTableProduto.getSelectedRow(), 7).toString();
+
+            this.TxtNomeProduto.setText(nome_produto);
+            this.TxtCategoria.setText(categoria);
+            this.TxtPreco.setText(preco);
+            this.TxtQntdEstoque.setText(estoque);
+            this.TxtQntdMax.setText(qntdMax);
+            this.TxtQntdMin.setText(qntdMin);
+            this.TxtUnidade.setText(unidade);
+
+        }
+
     }//GEN-LAST:event_JTableProdutoMouseClicked
 
-    
-    public void limparCampos() {
+        public void limparCampos() {
 
-        TxtNomeProduto.setText("");
-        TxtCategoria.setText("");
-        TxtPreco.setText("");
-        TxtQntdEstoque.setText("");
-        TxtQntdMax.setText("");
-        TxtQntdMin.setText("");
-        TxtUnidade.setText("");
-    }
-
-    public void carregaTabela() {
-
-        DefaultTableModel modelo
-                = (DefaultTableModel) JTableProduto.getModel();
-
-        modelo.setRowCount(0);
-
-        List<Produto> lista
-                = objProduto.listar();
-
-        for (Produto p : lista) {
-
-            modelo.addRow(new Object[]{
-                p.getId(),
-                p.getNome(),
-                p.getNome_categoria(),
-                p.getPreco(),
-                p.getQuantidade(),
-                p.getQntdMax(),
-                p.getQntdMin(),
-                p.getUnidade()
-            });
+            TxtNomeProduto.setText("");
+            TxtCategoria.setText("");
+            TxtPreco.setText("");
+            TxtQntdEstoque.setText("");
+            TxtQntdMax.setText("");
+            TxtQntdMin.setText("");
+            TxtUnidade.setText("");
         }
-      
-    }
+
+        public void carregaTabela() {
+
+            DefaultTableModel modelo
+                    = (DefaultTableModel) JTableProduto.getModel();
+
+            modelo.setRowCount(0);
+
+            List<Produto> lista
+                    = objProduto.listar();
+
+            for (Produto p : lista) {
+
+                modelo.addRow(new Object[]{
+                    p.getId(),
+                    p.getNome(),
+                    p.getNome_categoria(),
+                    p.getPreco(),
+                    p.getQuantidade(),
+                    p.getQntdMax(),
+                    p.getQntdMin(),
+                    p.getUnidade()
+                });
+            }
+
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable JTableProduto;
