@@ -29,59 +29,55 @@ public class ProdutoDAO {
         );
     }
 
-    // CADASTRAR
-   public void cadastrar(Produto produto) {
-    String sql = "INSERT INTO Produto(nome, id_categoria, preco_unitario, qntd_estoque, qntd_min_estoque, qntd_max_estoque, unidade) "
-               + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public void cadastrar(Produto produto) {
+        String sql = "INSERT INTO Produto(nome, id_categoria, preco_unitario, qntd_estoque, qntd_min_estoque, qntd_max_estoque, unidade) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    try (Connection conn = conectar();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        stmt.setString(1, produto.getNome());
-        stmt.setInt(2, produto.getId_categoria());
-        stmt.setDouble(3, produto.getPreco());
-        stmt.setInt(4, produto.getQuantidade());
-        stmt.setInt(5, produto.getQntdMin());
-        stmt.setInt(6, produto.getQntdMax());
-        stmt.setString(7, produto.getUnidade());
+            stmt.setString(1, produto.getNome());
+            stmt.setInt(2, produto.getId_categoria());
+            stmt.setDouble(3, produto.getPreco());
+            stmt.setInt(4, produto.getQuantidade());
+            stmt.setInt(5, produto.getQntdMin());
+            stmt.setInt(6, produto.getQntdMax());
+            stmt.setString(7, produto.getUnidade());
 
-        stmt.executeUpdate();
+            stmt.executeUpdate();
 
-    } catch (SQLException e) {
-        e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-}
 
-   public boolean existePorNome(String nome) {
-    String sql = "SELECT COUNT(*) FROM Produto WHERE nome = ?";
+    public boolean existePorNome(String nome) {
+        String sql = "SELECT COUNT(*) FROM Produto WHERE nome = ?";
 
-    try (Connection conn = conectar();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        stmt.setString(1, nome);
-        ResultSet rs = stmt.executeQuery();
+            stmt.setString(1, nome);
+            ResultSet rs = stmt.executeQuery();
 
-        if (rs.next()) {
-            return rs.getInt(1) > 0;
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return false;
     }
 
-    return false;
-}
-   
-   
     // LISTAR
     public List<Produto> listar() {
 
         List<Produto> lista = new ArrayList<>();
 
         String sql = "SELECT p.id_produto, p.nome, p.preco_unitario, p.unidade, p.qntd_estoque, p.qntd_min_estoque, p.qntd_max_estoque, c.nome "
-                    + "FROM Produto p "
-                    + "INNER JOIN Categoria c "
-                    + "ON p.id_produto = p.id_produto";
+                + "FROM Produto p "
+                + "INNER JOIN Categoria c "
+                + "ON p.id_produto = p.id_produto";
 
         try (
                 Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
@@ -98,7 +94,6 @@ public class ProdutoDAO {
                 produto.setQntdMin(rs.getInt("qntd_min_estoque"));
                 produto.setQntdMax(rs.getInt("qntd_max_estoque"));
                 produto.setNome_categoria(rs.getString("nome"));
-                
 
                 lista.add(produto);
             }
@@ -405,6 +400,30 @@ public class ProdutoDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public ArrayList<Produto> balanco() {
+        ArrayList<Produto> lista = new ArrayList<>();
+
+        String sql = "SELECT p.nome, p.qntd_estoque, p.preco_unitario "
+                + "FROM Produto p "
+                + "ORDER BY p.nome";
+
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Produto produto = new Produto();
+                produto.setNome(rs.getString("nome"));
+                produto.setQuantidade(rs.getInt("qntd_estoque"));
+                produto.setPreco(rs.getDouble("preco_unitario"));
+                lista.add(produto);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lista;
     }
 
 }

@@ -9,7 +9,7 @@ public class CategoriaBO {
     private CategoriaDAO dao = new CategoriaDAO();
 
     public boolean insertCategoria(String nomeCategoria, String embalagem, String tamanho) {
-        Categoria objeto = new Categoria(nomeCategoria, tamanho,embalagem );
+        Categoria objeto = new Categoria(nomeCategoria, tamanho, embalagem);
 
         dao.insertCategoriaDAO(objeto);
         return true;
@@ -26,7 +26,7 @@ public class CategoriaBO {
         return true;
     }
 
-   public boolean deleteCategoria(int id) {
+    public boolean deleteCategoria(int id) {
 
         dao.deleteCategoriaDAO(id);
         return true;
@@ -35,6 +35,10 @@ public class CategoriaBO {
     public ArrayList<String> listarNomesCategorias() {
 
         return dao.listarNomesCategorias();
+    }
+
+    public ArrayList<String[]> quantidadeProdutosPorCategoria() {
+        return dao.quantidadeProdutosPorCategoria();
     }
 
 }

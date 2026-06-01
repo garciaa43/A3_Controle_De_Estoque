@@ -44,7 +44,7 @@ public class TelaReajustePreco extends javax.swing.JInternalFrame {
         BtnConfirmar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtPorcentagem = new javax.swing.JTextField();
-        btnSair = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
 
         comboBoxProdutos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -55,8 +55,8 @@ public class TelaReajustePreco extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Porcentagem (ex: 10 para aumento, -10 para desconto):");
 
-        btnSair.setText("Sair");
-        btnSair.addActionListener(this::btnSairActionPerformed);
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(this::btnVoltarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,7 +71,7 @@ public class TelaReajustePreco extends javax.swing.JInternalFrame {
                     .addComponent(BtnConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtPorcentagem, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnSair)
+                .addComponent(btnVoltar)
                 .addGap(261, 261, 261))
         );
         layout.setVerticalGroup(
@@ -88,7 +88,7 @@ public class TelaReajustePreco extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnConfirmar)
-                    .addComponent(btnSair))
+                    .addComponent(btnVoltar))
                 .addContainerGap(207, Short.MAX_VALUE))
         );
 
@@ -122,9 +122,9 @@ public class TelaReajustePreco extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_BtnConfirmarActionPerformed
 
-    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.dispose();
-    }//GEN-LAST:event_btnSairActionPerformed
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void carregarProdutos() {
         comboBoxProdutos.removeAllItems();
@@ -136,7 +136,7 @@ public class TelaReajustePreco extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnConfirmar;
-    private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JComboBox<String> comboBoxProdutos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

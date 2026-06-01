@@ -45,7 +45,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         btnCadastrar = new javax.swing.JButton();
         BtnGerenciar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        btnSair = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
         TxtNomeProduto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -68,8 +68,8 @@ public class TelaProduto extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Nome do Produto: ");
 
-        btnSair.setText("Sair");
-        btnSair.addActionListener(this::btnSairActionPerformed);
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(this::btnVoltarActionPerformed);
 
         jLabel3.setText("Categoria");
 
@@ -94,7 +94,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(238, Short.MAX_VALUE)
+                .addContainerGap(291, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(TxtNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -118,7 +118,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
                                 .addComponent(BtnGerenciar))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSair)
+                                .addComponent(btnVoltar)
                                 .addGap(49, 49, 49))))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -164,7 +164,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
                             .addComponent(btnCadastrar)
                             .addComponent(BtnGerenciar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSair)))
+                        .addComponent(btnVoltar)))
                 .addContainerGap(108, Short.MAX_VALUE))
         );
 
@@ -231,9 +231,9 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         tela.setVisible(true);
     }//GEN-LAST:event_BtnGerenciarActionPerformed
 
-    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSairActionPerformed
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void TxtQntdMaximaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtQntdMaximaActionPerformed
         // TODO add your handling code here:
@@ -268,7 +268,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
     private javax.swing.JTextField TxtQntdMinima;
     private javax.swing.JTextField TxtUnidade;
     private javax.swing.JButton btnCadastrar;
-    private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JComboBox<Categoria> jComboBoxCategoria;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

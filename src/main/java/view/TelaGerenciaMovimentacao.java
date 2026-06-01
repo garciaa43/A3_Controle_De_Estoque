@@ -22,6 +22,7 @@ public class TelaGerenciaMovimentacao extends javax.swing.JInternalFrame {
 
         setBorder(null);
         this.carregaTabela();
+        TxtNomeProduto.disable();
     }
 
     /**
@@ -237,7 +238,7 @@ public class TelaGerenciaMovimentacao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void jTableMovimentacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMovimentacaoMouseClicked

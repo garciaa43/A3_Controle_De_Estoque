@@ -229,7 +229,7 @@ public class TelaGerenciaCategoria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BtnExcluirActionPerformed
 
     private void BtnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVoltarActionPerformed
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_BtnVoltarActionPerformed
 
     private void comboBoxTamanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxTamanhoActionPerformed

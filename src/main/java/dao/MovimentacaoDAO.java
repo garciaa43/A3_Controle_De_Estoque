@@ -145,4 +145,54 @@ public class MovimentacaoDAO {
         }
 
     }
+
+    public Movimentacao produtoMaisEntrada() {
+        String sql = "SELECT p.nome, SUM(m.quantidade) AS total "
+                + "FROM Movimentacao m "
+                + "INNER JOIN Produto p ON m.id_produto = p.id_produto "
+                + "WHERE m.tipo = 'ENTRADA' "
+                + "GROUP BY p.id_produto, p.nome "
+                + "ORDER BY total DESC "
+                + "LIMIT 1";
+
+        try (Connection conn = getConexao(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                Movimentacao obj = new Movimentacao();
+                obj.setNomeProduto(rs.getString("nome"));
+                obj.setQntdMovimentada(rs.getInt("total"));
+                return obj;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Movimentacao produtoMaisSaida() {
+        String sql = "SELECT p.nome, SUM(m.quantidade) AS total "
+                + "FROM Movimentacao m "
+                + "INNER JOIN Produto p ON m.id_produto = p.id_produto "
+                + "WHERE m.tipo = 'SAIDA' "
+                + "GROUP BY p.id_produto, p.nome "
+                + "ORDER BY total DESC "
+                + "LIMIT 1";
+
+        try (Connection conn = getConexao(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                Movimentacao obj = new Movimentacao();
+                obj.setNomeProduto(rs.getString("nome"));
+                obj.setQntdMovimentada(rs.getInt("total"));
+                return obj;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

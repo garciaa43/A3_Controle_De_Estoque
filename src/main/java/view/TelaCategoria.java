@@ -42,7 +42,7 @@ public class TelaCategoria extends javax.swing.JInternalFrame {
         btnCadastrar = new javax.swing.JButton();
         BtnGerenciar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        btnSair = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
         TxtNomeCategoria = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -59,8 +59,8 @@ public class TelaCategoria extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Nome da Categoria:");
 
-        btnSair.setText("Sair");
-        btnSair.addActionListener(this::btnSairActionPerformed);
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(this::btnVoltarActionPerformed);
 
         jLabel3.setText("Tamanho:");
 
@@ -83,7 +83,7 @@ public class TelaCategoria extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(BtnGerenciar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSair))
+                        .addComponent(btnVoltar))
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
                     .addComponent(TxtNomeCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -112,7 +112,7 @@ public class TelaCategoria extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrar)
                     .addComponent(BtnGerenciar)
-                    .addComponent(btnSair))
+                    .addComponent(btnVoltar))
                 .addContainerGap(165, Short.MAX_VALUE))
         );
 
@@ -135,7 +135,7 @@ public class TelaCategoria extends javax.swing.JInternalFrame {
              
               JOptionPane.showMessageDialog(
                         null,
-                        "Aluno cadastrado com sucesso!"
+                        "Categoria cadastrada com sucesso!"
                 );
 
                 limparCampos();
@@ -160,9 +160,9 @@ public class TelaCategoria extends javax.swing.JInternalFrame {
         tela.setVisible(true);
     }//GEN-LAST:event_BtnGerenciarActionPerformed
 
-    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_btnSairActionPerformed
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void comboBoxTamanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxTamanhoActionPerformed
         // TODO add your handling code here:
@@ -173,7 +173,7 @@ public class TelaCategoria extends javax.swing.JInternalFrame {
     private javax.swing.JButton BtnGerenciar;
     private javax.swing.JTextField TxtNomeCategoria;
     private javax.swing.JButton btnCadastrar;
-    private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JComboBox<String> comboBoxEmbalagem;
     private javax.swing.JComboBox<String> comboBoxTamanho;
     private javax.swing.JLabel jLabel2;

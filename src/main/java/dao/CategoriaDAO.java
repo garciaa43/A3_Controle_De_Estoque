@@ -149,7 +149,7 @@ public class CategoriaDAO {
     }
 
     public ArrayList<String> listarNomesCategorias() {
-         ArrayList<String> lista = new ArrayList<>();
+        ArrayList<String> lista = new ArrayList<>();
 
         try {
 
@@ -160,9 +160,8 @@ public class CategoriaDAO {
             );
 
             while (res.next()) {
-               lista.add(res.getString("nome"));
+                lista.add(res.getString("nome"));
 
-               
             }
 
             res.close();
@@ -171,6 +170,32 @@ public class CategoriaDAO {
         } catch (SQLException ex) {
 
             ex.printStackTrace();
+        }
+
+        return lista;
+    }
+
+    public ArrayList<String[]> quantidadeProdutosPorCategoria() {
+        ArrayList<String[]> lista = new ArrayList<>();
+
+        String sql = "SELECT c.nome AS categoria, COUNT(p.id_produto) AS quantidade "
+                + "FROM Categoria c "
+                + "LEFT JOIN Produto p ON c.id_categoria = p.id_categoria "
+                + "GROUP BY c.id_categoria, c.nome "
+                + "ORDER BY quantidade DESC";
+
+        try (Connection conn = getConexao(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                String[] linha = {
+                    rs.getString("categoria"),
+                    String.valueOf(rs.getInt("quantidade"))
+                };
+                lista.add(linha);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         return lista;

@@ -53,7 +53,7 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
         comboBoxTipodeMovimentacao = new javax.swing.JComboBox<>();
         btnCadastrar = new javax.swing.JButton();
         BtnGerenciar = new javax.swing.JButton();
-        btnSair = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
         comboBoxProdutos = new javax.swing.JComboBox<>();
 
         jLabel1.setText("jLabel1");
@@ -76,8 +76,8 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
         BtnGerenciar.setText("Gerenciar");
         BtnGerenciar.addActionListener(this::BtnGerenciarActionPerformed);
 
-        btnSair.setText("Sair");
-        btnSair.addActionListener(this::btnSairActionPerformed);
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(this::btnVoltarActionPerformed);
 
         comboBoxProdutos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -88,14 +88,14 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(57, 57, 57)
                 .addComponent(jLabel5)
-                .addGap(188, 188, 188)
+                .addGap(238, 238, 238)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnCadastrar)
                         .addGap(18, 18, 18)
                         .addComponent(BtnGerenciar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnSair))
+                        .addComponent(btnVoltar))
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
@@ -104,8 +104,8 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
                     .addComponent(comboBoxTipodeMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(comboBoxProdutos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TxtDataMovimentacao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)))
-                .addContainerGap(354, Short.MAX_VALUE))
+                        .addComponent(TxtDataMovimentacao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(304, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,7 +115,7 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
                         .addGap(224, 224, 224)
                         .addComponent(jLabel5))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
+                        .addGap(107, 107, 107)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboBoxProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -135,8 +135,8 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCadastrar)
                             .addComponent(BtnGerenciar)
-                            .addComponent(btnSair))))
-                .addContainerGap(172, Short.MAX_VALUE))
+                            .addComponent(btnVoltar))))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         pack();
@@ -227,9 +227,9 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
         tela.setVisible(true);
     }//GEN-LAST:event_BtnGerenciarActionPerformed
 
-    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSairActionPerformed
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -237,7 +237,7 @@ public class TelaMovimentacao extends javax.swing.JInternalFrame {
     private javax.swing.JTextField TxtDataMovimentacao;
     private javax.swing.JTextField TxtQntdMovimentada;
     private javax.swing.JButton btnCadastrar;
-    private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JComboBox<String> comboBoxProdutos;
     private javax.swing.JComboBox<String> comboBoxTipodeMovimentacao;
     private javax.swing.JLabel jLabel1;

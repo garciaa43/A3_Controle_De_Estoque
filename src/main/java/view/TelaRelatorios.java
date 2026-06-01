@@ -4,6 +4,8 @@
  */
 package view;
 
+import bo.CategoriaBO;
+import bo.MovimentacaoBO;
 import bo.ProdutoBO;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,20 +16,23 @@ import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import model.Produto;
+import model.Movimentacao;
 
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;        // ← Row do POI, não do MySQL!
-import org.apache.poi.ss.usermodel.Sheet;      // ← Sheet do POI ss.usermodel
+import org.apache.poi.ss.usermodel.Row;       
+import org.apache.poi.ss.usermodel.Sheet;      
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class TelaRelatorios extends javax.swing.JInternalFrame {
 
     private ProdutoBO objetoProduto = new ProdutoBO();
-    
+    private CategoriaBO objCategoria = new CategoriaBO();
+    private MovimentacaoBO objMovimentacao = new MovimentacaoBO();
+
     public TelaRelatorios(JDesktopPane desktopPane) {
         initComponents();
-        
+
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
 
         setBorder(null);
@@ -49,6 +54,7 @@ public class TelaRelatorios extends javax.swing.JInternalFrame {
         CbRelatorios = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         BtnGerarPDF = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -68,8 +74,11 @@ public class TelaRelatorios extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Relátorios:");
 
-        BtnGerarPDF.setText("Gerar PDF");
+        BtnGerarPDF.setText("Gerar Excel");
         BtnGerarPDF.addActionListener(this::BtnGerarPDFActionPerformed);
+
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(this::btnVoltarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,7 +92,9 @@ public class TelaRelatorios extends javax.swing.JInternalFrame {
                 .addComponent(CbRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnGerarPDF)
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnVoltar)
+                .addContainerGap(166, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,7 +104,8 @@ public class TelaRelatorios extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CbRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(BtnGerarPDF))
+                    .addComponent(BtnGerarPDF)
+                    .addComponent(btnVoltar))
                 .addGap(93, 93, 93))
         );
 
@@ -103,145 +115,194 @@ public class TelaRelatorios extends javax.swing.JInternalFrame {
     private void BtnGerarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGerarPDFActionPerformed
         try {
 
-        Workbook workbook = new XSSFWorkbook();
+            Workbook workbook = new XSSFWorkbook();
 
-        Sheet sheet = workbook.createSheet("Relatório");
+            Sheet sheet = workbook.createSheet("Relatório");
 
-        DefaultTableModel model =
-                (DefaultTableModel) jTable1.getModel();
+            DefaultTableModel model
+                    = (DefaultTableModel) jTable1.getModel();
 
-        // CRIAR CABEÇALHO
-        Row headerRow = sheet.createRow(0);
+            Row headerRow = sheet.createRow(0);
 
-        for (int i = 0; i < model.getColumnCount(); i++) {
+            for (int i = 0; i < model.getColumnCount(); i++) {
 
-            Cell cell = headerRow.createCell(i);
+                Cell cell = headerRow.createCell(i);
 
-            cell.setCellValue(model.getColumnName(i));
-        }
+                cell.setCellValue(model.getColumnName(i));
+            }
 
-        // PREENCHER DADOS
-        for (int i = 0; i < model.getRowCount(); i++) {
+            for (int i = 0; i < model.getRowCount(); i++) {
 
-            Row row = sheet.createRow(i + 1);
+                Row row = sheet.createRow(i + 1);
 
-            for (int j = 0; j < model.getColumnCount(); j++) {
+                for (int j = 0; j < model.getColumnCount(); j++) {
 
-                Cell cell = row.createCell(j);
+                    Cell cell = row.createCell(j);
 
-                Object valor = model.getValueAt(i, j);
+                    Object valor = model.getValueAt(i, j);
 
-                if (valor != null) {
+                    if (valor != null) {
 
-                    cell.setCellValue(valor.toString());
+                        cell.setCellValue(valor.toString());
+                    }
                 }
             }
-        }
 
-        // AJUSTAR TAMANHO DAS COLUNAS
-        for (int i = 0; i < model.getColumnCount(); i++) {
+            for (int i = 0; i < model.getColumnCount(); i++) {
 
-            sheet.autoSizeColumn(i);
-        }
+                sheet.autoSizeColumn(i);
+            }
 
-        JFileChooser fileChooser = new JFileChooser();
+            JFileChooser fileChooser = new JFileChooser();
 
-        fileChooser.setSelectedFile(
-                new java.io.File("relatorio.xlsx")
-        );
+            fileChooser.setSelectedFile(
+                    new java.io.File("relatorio.xlsx")
+            );
 
-        int opcao = fileChooser.showSaveDialog(this);
+            int opcao = fileChooser.showSaveDialog(this);
 
-        if (opcao == JFileChooser.APPROVE_OPTION) {
+            if (opcao == JFileChooser.APPROVE_OPTION) {
 
-            FileOutputStream arquivo =
-                    new FileOutputStream(
-                            fileChooser.getSelectedFile()
-                    );
+                FileOutputStream arquivo
+                        = new FileOutputStream(
+                                fileChooser.getSelectedFile()
+                        );
 
-            workbook.write(arquivo);
+                workbook.write(arquivo);
 
-            arquivo.close();
+                arquivo.close();
 
-            workbook.close();
+                workbook.close();
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Excel gerado com sucesso!"
+                );
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
 
             JOptionPane.showMessageDialog(
                     this,
-                    "Excel gerado com sucesso!"
+                    "Erro ao gerar Excel!"
             );
         }
-
-    } catch (Exception e) {
-
-        e.printStackTrace();
-
-        JOptionPane.showMessageDialog(
-                this,
-                "Erro ao gerar Excel!"
-        );
-    }
     }//GEN-LAST:event_BtnGerarPDFActionPerformed
 
     private void CbRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CbRelatoriosActionPerformed
-      carregarRelatorio();
+        carregarRelatorio();
     }//GEN-LAST:event_CbRelatoriosActionPerformed
 
-    
-    
-    
-    
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
+
     private void carregarRelatorio() {
+        String relatorio = CbRelatorios.getSelectedItem().toString();
+        DefaultTableModel model = new DefaultTableModel();
 
-    String relatorio = CbRelatorios.getSelectedItem().toString();
+        if (relatorio.equals("Lista de Preços")) {
+            model.addColumn("Nome");
+            model.addColumn("Preço");
+            model.addColumn("Unidade");
+            model.addColumn("Categoria");
+            model.setNumRows(0);
 
-    DefaultTableModel model = new DefaultTableModel();
+            ArrayList<Produto> minhaLista = objetoProduto.listarPrecosPorProdutos();
+            for (Produto p : minhaLista) {
+                model.addRow(new Object[]{
+                    p.getNome(),
+                    p.getPreco(),
+                    p.getUnidade(),
+                    p.getNome_categoria()
+                });
+            }
 
-    if(relatorio.equals("Lista de Preços")) {
+        } else if (relatorio.equals("Produtos abaixo do mínimo")) {
+            model.addColumn("Produto");
+            model.addColumn("Qtd Mínima");
+            model.addColumn("Qtd Estoque");
+            model.setNumRows(0);
 
-        model.addColumn("Nome");
-        model.addColumn("Preço");
-        model.addColumn("Unidade");
-        model.addColumn("Categoria");
-        model.setNumRows(0);
-        
+            ArrayList<Produto> minhaLista = objetoProduto.listarProdutosAbaixoMinimo();
+            for (Produto p : minhaLista) {
+                model.addRow(new Object[]{
+                    p.getNome(),
+                    p.getQntdMin(),
+                    p.getQuantidade()
+                });
+            }
 
-        ArrayList<Produto> minhaLista = objetoProduto.listarPrecosPorProdutos();
-        for (Produto p : minhaLista) {
-            model.addRow(new Object[]{
-                p.getNome(),
-                p.getPreco(),
-                p.getUnidade(),
-                p.getNome_categoria()
-            });
+        } else if (relatorio.equals("Balanço Físico/Financeiro")) {
+            model.addColumn("Produto");
+            model.addColumn("Qtd Estoque");
+            model.addColumn("Valor Unitário");
+            model.addColumn("Valor Total");
+            model.setNumRows(0);
+
+            double totalEstoque = 0;
+
+            ArrayList<Produto> minhaLista = objetoProduto.balanco();
+            for (Produto p : minhaLista) {
+                double valorProduto = p.getQuantidade() * p.getPreco();
+                totalEstoque += valorProduto;
+                model.addRow(new Object[]{
+                    p.getNome(),
+                    p.getQuantidade(),
+                    String.format("R$ %.2f", p.getPreco()),
+                    String.format("R$ %.2f", valorProduto)
+                });
+            }
+
+           
+            model.addRow(new Object[]{"TOTAL", "", "", String.format("R$ %.2f", totalEstoque)});
+
+        } else if (relatorio.equals("Produtos por categoria")) {
+            model.addColumn("Categoria");
+            model.addColumn("Qtd Produtos");
+            model.setNumRows(0);
+
+            ArrayList<String[]> minhaLista = objCategoria.quantidadeProdutosPorCategoria();
+            for (String[] linha : minhaLista) {
+                model.addRow(new Object[]{linha[0], linha[1]});
+            }
+
+
+        } else if (relatorio.equals("Produto com mais entrada/saída")) {
+            model.addColumn("Tipo");
+            model.addColumn("Produto");
+            model.addColumn("Quantidade Total");
+            model.setNumRows(0);
+
+            Movimentacao maisEntrada = objMovimentacao.produtoMaisEntrada();
+            Movimentacao maisSaida = objMovimentacao.produtoMaisSaida();
+
+            if (maisEntrada != null) {
+                model.addRow(new Object[]{
+                    "Mais Entrada",
+                    maisEntrada.getNomeProduto(),
+                    maisEntrada.getQntdMovimentada()
+                });
+            }
+            if (maisSaida != null) {
+                model.addRow(new Object[]{
+                    "Mais Saída",
+                    maisSaida.getNomeProduto(),
+                    maisSaida.getQntdMovimentada()
+                });
+            }
         }
+
+        jTable1.setModel(model);
     }
 
-    else if(relatorio.equals("Produtos abaixo do mínimo")) {
-
-        model.addColumn("Produto");
-        model.addColumn("Qtd Mínima");
-        model.addColumn("Qtd Estoque");
-        model.setNumRows(0);
-
-         ArrayList<Produto> minhaLista = objetoProduto.listarProdutosAbaixoMinimo();
-        for (Produto p : minhaLista) {
-            model.addRow(new Object[]{
-                p.getNome(),
-                p.getQntdMin(),
-                p.getQuantidade()
-            });
-        }
-
-    }
-
-    jTable1.setModel(model);
-
-}
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnGerarPDF;
     private javax.swing.JComboBox<String> CbRelatorios;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

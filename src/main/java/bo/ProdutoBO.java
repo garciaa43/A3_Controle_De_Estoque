@@ -71,4 +71,8 @@ public class ProdutoBO {
     public boolean reajustarPrecoPorId(int idProduto, double porcentagem) {
         return dao.reajustarPrecoPorId(idProduto, porcentagem);
     }
+
+    public ArrayList<Produto> balanco() {
+        return dao.balanco();
+    }
 }

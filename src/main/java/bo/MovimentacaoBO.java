@@ -75,4 +75,12 @@ public class MovimentacaoBO {
     public String getUltimoAlertaEstoque() {
         return ultimoAlertaEstoque;
     }
+
+    public Movimentacao produtoMaisEntrada() {
+        return dao.produtoMaisEntrada();
+    }
+
+    public Movimentacao produtoMaisSaida() {
+        return dao.produtoMaisSaida();
+    }
 }

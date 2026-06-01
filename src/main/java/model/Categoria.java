@@ -1,6 +1,7 @@
 package model;
 
 public class Categoria {
+
     private int id_categoria;
     private String nome;
     private String tamanho;
@@ -9,13 +10,13 @@ public class Categoria {
     public Categoria() {
     }
 
-    public Categoria(int id,String nome, String tamanho, String embalegem) {
+    public Categoria(int id, String nome, String tamanho, String embalegem) {
         this.id_categoria = id;
         this.nome = nome;
         this.tamanho = tamanho;
         this.embalegem = embalegem;
     }
-    
+
     public Categoria(String nome, String tamanho, String embalegem) {
         this.nome = nome;
         this.tamanho = tamanho;
@@ -56,10 +57,7 @@ public class Categoria {
 
     @Override
     public String toString() {
-        return "Nome: " + nome 
-               + "Tamanho: " + tamanho 
-               + "Embalegem: " + embalegem;
+        return this.nome + " - " + this.tamanho + " - " + this.embalegem;
     }
-    
-    
+
 }
