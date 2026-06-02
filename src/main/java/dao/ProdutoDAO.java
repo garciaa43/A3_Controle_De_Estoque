@@ -74,18 +74,17 @@ public class ProdutoDAO {
 
         List<Produto> lista = new ArrayList<>();
 
-        String sql = "SELECT p.id_produto, p.nome, p.preco_unitario, p.unidade, p.qntd_estoque, p.qntd_min_estoque, p.qntd_max_estoque, c.nome "
+        String sql = "SELECT p.id_produto, p.nome, p.preco_unitario, p.unidade, "
+                + "p.qntd_estoque, p.qntd_min_estoque, p.qntd_max_estoque, c.nome AS nome_categoria "
                 + "FROM Produto p "
                 + "INNER JOIN Categoria c "
-                + "ON p.id_produto = p.id_produto";
+                + "ON p.id_categoria = c.id_categoria"; 
 
         try (
                 Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-
                 Produto produto = new Produto();
-
                 produto.setId(rs.getInt("id_produto"));
                 produto.setNome(rs.getString("nome"));
                 produto.setPreco(rs.getDouble("preco_unitario"));
@@ -93,13 +92,11 @@ public class ProdutoDAO {
                 produto.setQuantidade(rs.getInt("qntd_estoque"));
                 produto.setQntdMin(rs.getInt("qntd_min_estoque"));
                 produto.setQntdMax(rs.getInt("qntd_max_estoque"));
-                produto.setNome_categoria(rs.getString("nome"));
-
+                produto.setNome_categoria(rs.getString("nome_categoria")); 
                 lista.add(produto);
             }
 
         } catch (SQLException e) {
-
             System.out.println("Erro ao listar produtos");
             e.printStackTrace();
         }
