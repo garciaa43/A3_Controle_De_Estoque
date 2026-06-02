@@ -2,10 +2,13 @@
 
 package main;
 
+import view.TelaMenuPrincipal;
 
-public class main {
+
+public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        TelaMenuPrincipal tela = new TelaMenuPrincipal();
+        tela.setVisible(true);
     }
 }

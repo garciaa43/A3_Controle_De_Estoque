@@ -264,7 +264,7 @@ public final class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
                         "Selecione um Produto para alterar."
                 );
             }
-            String nomeProduto = TxtNomeProduto.getText();
+            String nomeProduto = TxtnomeProduto.getText();
             String categoria = TxtCategoria.getText();
             String preco = TxtPreco.getText();
             String quantidadeEstoque = TxtQntdEstoque.getText();

@@ -30,6 +30,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         setBorder(null);
         this.desktopPane = desktopPane;
         this.carregarCategorias();
+        this.limparCampos();
 
     }
 
@@ -278,4 +279,14 @@ public class TelaProduto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     // End of variables declaration//GEN-END:variables
+
+    private void limparCampos() {
+        TxtNomeProduto.setText("");
+        TxtPreco.setText("");
+        TxtQntdEstoque.setText("");
+        TxtQntdMaxima.setText("");
+        TxtQntdMinima.setText("");
+        TxtUnidade.setText("");
+        
+    }
 }
