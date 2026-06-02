@@ -365,7 +365,7 @@ public final class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
 
         public void limparCampos() {
 
-            TxtNomeProduto.setText("");
+            TxtnomeProduto.setText("");
             TxtCategoria.setText("");
             TxtPreco.setText("");
             TxtQntdEstoque.setText("");

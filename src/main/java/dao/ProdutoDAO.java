@@ -78,7 +78,7 @@ public class ProdutoDAO {
                 + "p.qntd_estoque, p.qntd_min_estoque, p.qntd_max_estoque, c.nome AS nome_categoria "
                 + "FROM Produto p "
                 + "INNER JOIN Categoria c "
-                + "ON p.id_categoria = c.id_categoria"; 
+                + "ON p.id_categoria = c.id_categoria";
 
         try (
                 Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
@@ -92,7 +92,7 @@ public class ProdutoDAO {
                 produto.setQuantidade(rs.getInt("qntd_estoque"));
                 produto.setQntdMin(rs.getInt("qntd_min_estoque"));
                 produto.setQntdMax(rs.getInt("qntd_max_estoque"));
-                produto.setNome_categoria(rs.getString("nome_categoria")); 
+                produto.setNome_categoria(rs.getString("nome_categoria"));
                 lista.add(produto);
             }
 
@@ -106,24 +106,23 @@ public class ProdutoDAO {
 
     // EDITAR
     public void atualizar(Produto produto) {
-
-        String sql
-                = "UPDATE produto SET nome=?, quantidade=?, preco=? WHERE id=?";
-
+        String sql = "UPDATE Produto SET id_categoria=?, nome=?, preco_unitario=?, unidade=?, "
+                + "qntd_estoque=?, qntd_min_estoque=?, qntd_max_estoque=? WHERE id_produto=?";
         try (
                 Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, produto.getNome());
-            stmt.setInt(2, produto.getQuantidade());
+            stmt.setInt(1, produto.getId_categoria());
+            stmt.setString(2, produto.getNome());
             stmt.setDouble(3, produto.getPreco());
-            stmt.setInt(4, produto.getId());
+            stmt.setString(4, produto.getUnidade());
+            stmt.setInt(5, produto.getQuantidade());
+            stmt.setInt(6, produto.getQntdMin());
+            stmt.setInt(7, produto.getQntdMax());
+            stmt.setInt(8, produto.getId());
 
             stmt.executeUpdate();
-
             System.out.println("Produto atualizado!");
-
         } catch (SQLException e) {
-
             System.out.println("Erro ao atualizar produto");
             e.printStackTrace();
         }

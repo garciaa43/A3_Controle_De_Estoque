@@ -30,7 +30,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         setBorder(null);
         this.desktopPane = desktopPane;
         this.carregarCategorias();
-        this.limparCampos();
+        
 
     }
 
@@ -223,6 +223,7 @@ public class TelaProduto extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
+        limparCampos();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void BtnGerenciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGerenciarActionPerformed
