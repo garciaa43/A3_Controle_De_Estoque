@@ -1,5 +1,6 @@
 package view;
 
+import bo.CategoriaBO;
 import bo.ProdutoBO;
 import java.util.List;
 
@@ -260,10 +261,9 @@ public final class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
             int linha = JTableProduto.getSelectedRow();
 
             if (linha == -1) {
-                throw new Mensagem(
-                        "Selecione um Produto para alterar."
-                );
+                throw new Mensagem("Selecione um Produto para alterar.");
             }
+
             String nomeProduto = TxtnomeProduto.getText();
             String categoria = TxtCategoria.getText();
             String preco = TxtPreco.getText();
@@ -271,6 +271,16 @@ public final class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
             String quantidadeMinima = TxtQntdMin.getText();
             String quantidadeMaxima = TxtQntdMax.getText();
             String unidade = TxtUnidade.getText();
+
+            if (nomeProduto.isEmpty()
+                    || categoria.isEmpty()
+                    || preco.isEmpty()
+                    || quantidadeEstoque.isEmpty()
+                    || quantidadeMinima.isEmpty()
+                    || quantidadeMaxima.isEmpty()
+                    || unidade.isEmpty()) {
+                throw new Mensagem("Preencha todos os campos.");
+            }
 
             if (nomeProduto.matches(".*\\d.*")) {
                 throw new Mensagem("O nome do produto não pode conter números.");
@@ -280,59 +290,36 @@ public final class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
                 throw new Mensagem("Quantidade inválida.");
             }
 
-            int id = Integer.parseInt(
-                    JTableProduto.getValueAt(linha, 0).toString()
-            );
+            // Busca o ID da categoria pelo nome
+            CategoriaBO categoriaBO = new CategoriaBO();
+            int idCategoria = categoriaBO.buscarIdPorNome(categoria);
 
-            int quantidade = Integer.parseInt(quantidadeEstoque);
+            if (idCategoria == -1) {
+                throw new Mensagem("Categoria '" + categoria + "' não encontrada.");
+            }
 
-            double precoProduto = Double.parseDouble(preco);
-
-            int qntdMin = Integer.parseInt(quantidadeMinima);
-            int qntdMax = Integer.parseInt(quantidadeMaxima);
+            int id = Integer.parseInt(JTableProduto.getValueAt(linha, 0).toString());
 
             Produto produto = new Produto();
-
             produto.setId(id);
             produto.setNome(nomeProduto);
+            produto.setId_categoria(idCategoria);
             produto.setNome_categoria(categoria);
-            produto.setPreco(precoProduto);
-            produto.setQuantidade(quantidade);
-            produto.setQntdMin(qntdMin);
-            produto.setQntdMax(qntdMax);
+            produto.setPreco(Double.parseDouble(preco));
+            produto.setQuantidade(Integer.parseInt(quantidadeEstoque));
+            produto.setQntdMin(Integer.parseInt(quantidadeMinima));
+            produto.setQntdMax(Integer.parseInt(quantidadeMaxima));
             produto.setUnidade(unidade);
-
-            if (nomeProduto.isEmpty()
-                    || categoria.isEmpty()
-                    || preco.isEmpty()
-                    || quantidadeEstoque.isEmpty()
-                    || quantidadeMinima.isEmpty()
-                    || quantidadeMaxima.isEmpty()
-                    || unidade.isEmpty()) {
-
-                throw new Mensagem("Preencha todos os campos.");
-            }
 
             objProduto.atualizar(produto);
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Produto alterado com sucesso!"
-            );
+            JOptionPane.showMessageDialog(this, "Produto alterado com sucesso!");
 
             carregaTabela();
-
             limparCampos();
 
         } catch (Mensagem e) {
-
-            JOptionPane.showMessageDialog(
-                    null,
-                    e.getMessage(),
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE
-            );
-
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -363,42 +350,42 @@ public final class TelaGerenciamentoProduto extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_JTableProdutoMouseClicked
 
-        public void limparCampos() {
+    public void limparCampos() {
 
-            TxtnomeProduto.setText("");
-            TxtCategoria.setText("");
-            TxtPreco.setText("");
-            TxtQntdEstoque.setText("");
-            TxtQntdMax.setText("");
-            TxtQntdMin.setText("");
-            TxtUnidade.setText("");
+        TxtnomeProduto.setText("");
+        TxtCategoria.setText("");
+        TxtPreco.setText("");
+        TxtQntdEstoque.setText("");
+        TxtQntdMax.setText("");
+        TxtQntdMin.setText("");
+        TxtUnidade.setText("");
+    }
+
+    public void carregaTabela() {
+
+        DefaultTableModel modelo
+                = (DefaultTableModel) JTableProduto.getModel();
+
+        modelo.setRowCount(0);
+
+        List<Produto> lista
+                = objProduto.listar();
+
+        for (Produto p : lista) {
+
+            modelo.addRow(new Object[]{
+                p.getId(),
+                p.getNome(),
+                p.getNome_categoria(),
+                p.getPreco(),
+                p.getQuantidade(),
+                p.getQntdMax(),
+                p.getQntdMin(),
+                p.getUnidade()
+            });
         }
 
-        public void carregaTabela() {
-
-            DefaultTableModel modelo
-                    = (DefaultTableModel) JTableProduto.getModel();
-
-            modelo.setRowCount(0);
-
-            List<Produto> lista
-                    = objProduto.listar();
-
-            for (Produto p : lista) {
-
-                modelo.addRow(new Object[]{
-                    p.getId(),
-                    p.getNome(),
-                    p.getNome_categoria(),
-                    p.getPreco(),
-                    p.getQuantidade(),
-                    p.getQntdMax(),
-                    p.getQntdMin(),
-                    p.getUnidade()
-                });
-            }
-
-        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable JTableProduto;

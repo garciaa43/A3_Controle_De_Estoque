@@ -106,6 +106,9 @@ public class ProdutoDAO {
 
     // EDITAR
     public void atualizar(Produto produto) {
+
+        System.out.println("id_categoria recebido: " + produto.getId_categoria());
+        System.out.println("id_produto: " + produto.getId());
         String sql = "UPDATE Produto SET id_categoria=?, nome=?, preco_unitario=?, unidade=?, "
                 + "qntd_estoque=?, qntd_min_estoque=?, qntd_max_estoque=? WHERE id_produto=?";
         try (
@@ -132,7 +135,7 @@ public class ProdutoDAO {
     public void excluir(int id) {
 
         String sql
-                = "DELETE FROM produto WHERE id=?";
+                = "DELETE FROM produto WHERE id_produto=?";
 
         try (
                 Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {

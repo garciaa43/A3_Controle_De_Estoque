@@ -200,4 +200,23 @@ public class CategoriaDAO {
 
         return lista;
     }
+
+    public int buscarIdPorNome(String nomeCategoria) {
+        String sql = "SELECT id_categoria FROM Categoria WHERE nome = ?";
+
+        try (Connection conn = getConexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, nomeCategoria);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("id_categoria");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1; // não encontrado
+    }
 }

@@ -41,4 +41,9 @@ public class CategoriaBO {
         return dao.quantidadeProdutosPorCategoria();
     }
 
+    public int buscarIdPorNome(String categoria) {
+        return dao.buscarIdPorNome(categoria);
+
+    }
+
 }
